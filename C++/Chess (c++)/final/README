@@ -1,0 +1,18 @@
+TEAM:
+Kyle Kim, kkim198
+Srisha Murthy Nippani, snippan1
+Joshua Brown, jbrow384
+
+DESIGN:
+We primarily followed the design provided in the starter code, though we implemented various helper functions. 
+For example, in game.cpp, we implemented the methods can_move_here and can_block to help us test for various 
+edge cases in checkmate. Additionally, we also implemented methods such as left_col_in_check, right_col_in_check 
+etc... to check if the king can move to adjacent rows and columns. These helper functions were called in the 
+method in_check.
+
+Point value implementation:
+We have two methods: white_point_value and black_point_value. white_point_value checks every white piece on
+the board and adds the points to point_value. black_point_value works in a similar fashion.
+
+COMPLETE:
+Fully Complete

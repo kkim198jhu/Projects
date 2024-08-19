@@ -1,0 +1,665 @@
+commit dc0742fe48468adeefb26e1376d91718b81119a8
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 15:54:58 2024 -0400
+
+    Now have unspecific in_path
+
+commit 4c927e6b10ab2fbd11bdb4e0087f5946d9a9050b
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 15:38:11 2024 -0400
+
+    test
+
+commit ee3121eeebf0ea0f9a4248c7dc2ae2c5050b79bf
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 15:26:30 2024 -0400
+
+    Make Move Completely Works
+
+commit feb0ee7f9a5b52352615abaf4873b959f1317518
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 14:59:53 2024 -0400
+
+    Minor Error handling
+
+commit 0b9c7999914fa1563572d902f9e80f6157f4f32d
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 10:32:18 2024 -0400
+
+    Test cases
+
+commit a33602c5cdcecbbc0e0139233a44c2ff7e96e208
+Merge: 6aee606 e86333e
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 10:30:05 2024 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2024-spring-final-jbrow384-snippan1-kkim198
+
+commit 6aee60618fd0ea5f136dab31d130ada11239003c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 25 10:29:59 2024 -0400
+
+    Game multiple check test for checkmate works now
+
+commit e86333ee48168d04d2cf07919a004a5c61202b19
+Author: bigQR <qrJosh@outlook.com>
+Date:   Thu Apr 25 02:02:28 2024 -0400
+
+    Most sample checkmates from chess.com added, all passed
+
+commit dab69bddba7833c3a91ce4e2b06c61ceb464081a
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 16:25:59 2024 -0400
+
+    Fixed checking around the king
+
+commit a69c908f741e0230eecabdd1dfe5a028fc3825ca
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 14:21:00 2024 -0400
+
+    Bishop cannot take itself now
+
+commit 6fdb7d1151056290783ae1ff925ff69cf2795f8e
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 14:18:28 2024 -0400
+
+    Queen cannot attack itself
+
+commit 68aba5260c037b7e8cde72fcc86efbba7b24a6f7
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 13:31:58 2024 -0400
+
+    Check checks on the wrong color fix
+
+commit edd60af759357df084a7be2da5d9dcb5ecce1d37
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 13:14:15 2024 -0400
+
+    Move expose check is now not that
+
+commit 9c1db794cf398da4106c490494c1f850b6e55ba4
+Author: bigQR <qrJosh@outlook.com>
+Date:   Wed Apr 24 13:11:33 2024 -0400
+
+    Failed test case
+
+commit 95994864fc91c18fe1fcacd8307e4014f63f68f5
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 13:10:00 2024 -0400
+
+    Make Move with in check
+
+commit 38057ec5834e9ad5447f0afa47b3f79288bd6dbd
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 13:05:55 2024 -0400
+
+    Check fixed
+
+commit b92a6195609b42c621403f1f74c25295d9609c7a
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 24 12:55:36 2024 -0400
+
+    added README
+
+commit 8a8b1ed8035fb42ee7af441042bacc1a0374df12
+Merge: 13ae3c0 cd9e7c5
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 24 12:49:50 2024 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2024-spring-final-jbrow384-snippan1-kkim198
+
+commit cd9e7c55fd538c02b644fddc64ae04e66460680c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 12:46:20 2024 -0400
+
+    Mystery test case works
+
+commit 13ae3c0f10f5bb85b775105320b590a0e75aba3d
+Merge: 87c6a25 d58024f
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 24 12:43:21 2024 -0400
+
+    Added README
+
+commit a6ceb7bcec45d0b297ac16b0d4324b1a8ed1b808
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 12:40:33 2024 -0400
+
+    Rook now has value
+
+commit 305abcc946f8751c9c16270d3ebf8f2135486d0d
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 12:40:19 2024 -0400
+
+    Pieces now have values
+
+commit 87c6a257b6b95bbe843c5478531d6c97f1d918c7
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 24 12:39:38 2024 -0400
+
+    Added README
+
+commit d58024fcb7a38691e1c7c44265d4f9090ee10e2f
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 12:27:44 2024 -0400
+
+    Captured and legal moves are in corret order
+
+commit d6a279c747f30fa3f6ea6023cc1d59eaa16d86b0
+Author: bigQR <qrJosh@outlook.com>
+Date:   Wed Apr 24 12:19:29 2024 -0400
+
+    Names and JHEDs added to the top of every source file
+
+commit a4274adacec189b67d3a47ff4269f9941007aa73
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 11:50:30 2024 -0400
+
+    Stalemate and checkmate changed i.e. can_move_here is changed to account for mystery piece
+
+commit c120829be283a1fabf777d67aab4dd7990f52523
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 11:29:02 2024 -0400
+
+    Pawns cannot hop over pawns
+
+commit 8ae589c9ba27e750588ed1d7fdf77a56bea17922
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 02:51:53 2024 -0400
+
+    Stalemate should be completely working
+
+commit dddb294bc3d756f7199cd1e178ed66cbbc89440c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 02:07:29 2024 -0400
+
+    Mkaes sure pawns can't move in diagonal
+
+commit 74d89867f22dc4a69d23bfce4ae2a0c8d5e9c83e
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 01:51:45 2024 -0400
+
+    Make sure that the king can't take a piece if it is protected
+
+commit 57da9be03cecf68f43fe0f24a683805f964b5a87
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 01:50:32 2024 -0400
+
+    Test cases for checkmate
+
+commit 881a6dbfe08b0216fdd85e77cad4b8a27d4bbecc
+Merge: 80b2990 90d7384
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 01:26:45 2024 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2024-spring-final-jbrow384-snippan1-kkim198
+
+commit 80b2990b95e01d68c969616ea91053cd0a2844ea
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 24 01:24:37 2024 -0400
+
+    Lots of edge case handling
+
+commit 90d73847dedd16d628425857665aa1fa749ae114
+Author: bigQR <qrJosh@outlook.com>
+Date:   Wed Apr 24 01:19:00 2024 -0400
+
+    Fixed memory freeing when load fails due to file not existing
+
+commit 5ac1f708653d39f4db8a00a51ae9ea86aab9b399
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Tue Apr 23 23:04:21 2024 -0400
+
+    added new test case
+
+commit 3a0927532dd50c1d27e22493daca68741bddb8dd
+Author: bigQR <qrJosh@outlook.com>
+Date:   Tue Apr 23 21:09:28 2024 -0400
+
+    Load operator now starts from the right row
+
+commit cf1d098c38243053c0b1e9ee65b13dc9b0acf595
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 23 10:42:35 2024 -0400
+
+    pin pieces work
+
+commit 04b1b98cb53292395411193ec75860cfcdee13a2
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 23 08:46:54 2024 -0400
+
+    Game Works
+
+commit 548f6e0b36d95a850c1852d34708c9d0d8321924
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 23 00:12:30 2024 -0400
+
+    testing mystery
+
+commit cd51ef4ada186a48404b122552cdc668a6638fae
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 23:58:59 2024 -0400
+
+    pin.txt
+
+commit f8a150ac5490fb1e7c69fbfdf0bd1c6433d54ef7
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 17:26:26 2024 -0400
+
+    Added an return -1 statement for error handling
+
+commit 2eeee69b9b53923b0e8529030d55d52d75eaf7ec
+Merge: b3c23e4 f4945d6
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Mon Apr 22 13:17:55 2024 -0400
+
+    implemented stalemate
+
+commit b3c23e473ca886d9931acc496ac5a33fc8f31c05
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Mon Apr 22 13:13:15 2024 -0400
+
+    implemented in_stalemate
+
+commit f4945d622d468f5913b98617e70b2cf08c2c2270
+Merge: 27173cd c1f795a
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Apr 22 13:06:29 2024 -0400
+
+    >> operator implemented, done in txt file to avoid conflicting pushes
+
+commit 27173cd93796e3def1888d26911876d8964958d5
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Apr 22 13:03:51 2024 -0400
+
+    >> operator for game implemented, added to github in txt file since we are all currently working on Game.cpp
+
+commit c1f795ad16ae70cf0ecfeca9f70748993d09c674
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Mon Apr 22 12:28:35 2024 -0400
+
+    partial implementation of stalemate
+
+commit 1cb30e08656b90b33533099dfcb220e4c2db0e9c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 11:53:58 2024 -0400
+
+    Revert some changes
+
+commit 3d7c441b8cf7966d0053d924d830dd6123abd628
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 10:58:46 2024 -0400
+
+    Tried soemthigns, but changes failed
+
+commit 17abb7fb340bed8cc669287e7c9d3b4fd4bcf24c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 10:47:31 2024 -0400
+
+    Game checkmate is finished except needs to check for pinning
+
+commit b860870d29c642c2faecf73775deef70ec2e2555
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 10:20:42 2024 -0400
+
+    Rock wasn't working but now is
+
+commit 14595388c7746b16176f06bf6843ef1a41deecda
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 22 09:11:40 2024 -0400
+
+    Looks for mystery piece in path now
+
+commit c961712c08a5250ca80cbbef88124b4041d7568c
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Sun Apr 21 19:14:03 2024 -0400
+
+    modified in_mate method and added some pseudocode"
+    
+    git commit -m "modified in_mate method and added some pseudocode"
+
+commit 3233b0b88026646ffe5b0d1ba9e1287fcac47632
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sat Apr 20 19:43:33 2024 -0400
+
+    Pieces now working with pawn
+
+commit 0ca1f0ba8cbc9a8248356d75f298140130d26e8a
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 16:51:46 2024 -0400
+
+    Makes sure that pawns don't move sideways
+
+commit 545995382bd324ab4ed3325d4a1a94372eadd8b8
+Merge: 25daa81 bf3b72a
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 16:47:38 2024 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2024-spring-final-jbrow384-snippan1-kkim198
+
+commit bf3b72ac375133c3e6e5403af8c535bede046c8b
+Merge: bbff0bb 1792c8d
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Fri Apr 19 13:16:05 2024 -0400
+
+    added code to in_main
+
+commit 25daa81fcd82a68a13e72661273d237d200ccb9c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 13:10:40 2024 -0400
+
+    Pawn doesn't move sideways now
+
+commit bbff0bbbad1c0541daf71ab821fb1006d1525cc2
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Fri Apr 19 13:04:41 2024 -0400
+
+    partially implemented in mate; added condition to check if a piece can block the check
+
+commit 1792c8d32eaa98270faf83014f9164ae02bc0330
+Author: bigQR <qrJosh@outlook.com>
+Date:   Fri Apr 19 12:45:44 2024 -0400
+
+    Added try/catch blocks for file i/o in main
+
+commit 9d60685ee1ea2d05a354c4a230f1d6df61782b24
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 11:08:41 2024 -0400
+
+    Test in checkmate if the piece can be captured
+
+commit b62dc154cd798657b07135c2e08942622e25d628
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 10:28:38 2024 -0400
+
+    Added function to get the position of the checking piece
+
+commit 86da3657949e4bfeeb91dfe25bcd422876c64807
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 10:16:01 2024 -0400
+
+    Error fixing
+
+commit 7298adefcf1b17e4bf85794b941259fe40aea652
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 10:14:06 2024 -0400
+
+    Checks for double checks
+
+commit 3cfd57dd46bbc54c52edae21a9e909aadb41f1f0
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Fri Apr 19 09:49:25 2024 -0400
+
+    Added a singular comments
+
+commit 1a150367d27331e946b38b77ad4a1db9ce31b1c1
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 19:48:13 2024 -0400
+
+    Added Promotions
+
+commit 68e632c1955fe027f441a702cea63dab1430c645
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 19:44:02 2024 -0400
+
+    Board now has destructor
+
+commit f6e99d611b12a430e48d2ea701ad2f7796112d35
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 19:26:17 2024 -0400
+
+    Fixed part of checkmate, but still need to check if you can block or take the piece
+
+commit c6dbb151b58f95d2dd10c1f2dc18077daea4b464
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 11:24:29 2024 -0400
+
+    Added Could not make move to main
+
+commit 639ea6a4ac94d3729fdf68f54c900996ec2969b3
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 11:22:52 2024 -0400
+
+    Diagonal truely checked now
+
+commit 7bc5dc80ccc90eff5c647bcddf454839d19c367c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 11:16:21 2024 -0400
+
+    Now bishops and diagonal checks work now
+
+commit 28b145531ee6fcad975fdef0436ed20bfa42c8d5
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 11:09:10 2024 -0400
+
+    New thing to check if the piece is in check
+
+commit b6ce5b4290c9303ed3886a3ca44ea870c482fc94
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 01:05:30 2024 -0400
+
+    One try/catch blcok is now added
+
+commit 64e56bc3a1a9fc873c4cc42aa1059334aca7395a
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 01:05:11 2024 -0400
+
+    Game is changed to check for check
+
+commit 10d8f59eec231fdf9a7aba7253274c6b61288d13
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 00:31:08 2024 -0400
+
+    Delete piece from the board function added
+
+commit 60d6fcee629cdbe18775112f4f319bc720fb3e45
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Apr 18 00:30:25 2024 -0400
+
+    Minor changes added
+
+commit c68131f42442c807f93c15fc9bc70104f2a57fdf
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 23:06:05 2024 -0400
+
+    Makefile -g
+
+commit 9326542936d4c7b371c67dab87e29394ef015b0d
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 22:56:12 2024 -0400
+
+    Point Value is correct
+
+commit 478cb6f3e4247acd4a62fff337b02b5a43a6a4da
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 22:55:45 2024 -0400
+
+    Board is now set
+
+commit c5f71e206056d87903e4a541dccf4a983ebf5c29
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 21:01:01 2024 -0400
+
+    Same error fixed as last psuh
+
+commit 4c1a006aa10a57bbdb2f8b9d7beb907fba5223b3
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 21:00:39 2024 -0400
+
+    Now compiles as the positions aren't points
+
+commit 10ee7925bcc4e35da18d82a1cbd7bfa0d4e3ec39
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 17 12:46:03 2024 -0400
+
+    implemented king
+
+commit ad62a59bbe061ed3e7a7e90034582ba2b2d726ff
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 17 12:43:49 2024 -0400
+
+    modified knight
+
+commit c9e94ced7f13fc053b57236f43a9e0da90c3683e
+Author: bigQR <qrJosh@outlook.com>
+Date:   Wed Apr 17 12:41:51 2024 -0400
+
+    Added legal move shape's requirement for the piece to move
+
+commit 8826fdb704d5b8f718784990128bf246494e419a
+Merge: 6a144a5 4e50f22
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 12:39:24 2024 -0400
+
+    Retry
+
+commit 6a144a501b787468f7af11f2df98d5f5fe2a73f9
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 12:32:03 2024 -0400
+
+    Checks if there is a piece already there
+
+commit 4e50f22d34ea43dca9973b1ba5582dc48086d464
+Author: bigQR <qrJosh@outlook.com>
+Date:   Wed Apr 17 12:31:12 2024 -0400
+
+    Added check to ensure queen moves
+
+commit 58fefc7702ab8ccd49f48276f6e06c7a8e759f06
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 11:42:22 2024 -0400
+
+    Finished checking around the piece and piece itself for checkmate
+
+commit f9e1a40127b246014aeb89184f4b6d2ce67f57dd
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Apr 17 09:34:49 2024 -0400
+
+    error handling
+
+commit b2261d60c828ad1454f0fdf103083ceb0afa494e
+Author: srishamurthy <nsrishamurthy711@gmail.com>
+Date:   Wed Apr 17 00:45:10 2024 -0400
+
+    Implemented knight
+
+commit af439dbe7adcdd5f764ceb0b8ac40aeb7106eb49
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 23:29:45 2024 -0400
+
+    Finished get point value
+
+commit 5bfa0363523a1a23caf980d8416c0de120d0db7a
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 22:38:28 2024 -0400
+
+    Board added queens and kings to error
+
+commit 32c74d1adf17b3b8d6a37c033c37a0d29903346f
+Merge: 6a88d8b 9660aff
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 22:28:55 2024 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2024-spring-final-jbrow384-snippan1-kkim198
+
+commit 6a88d8bf49e193576f5bbca71b9775cce113c3eb
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 22:28:03 2024 -0400
+
+    Added and commented in check, but needs testing
+
+commit 9660aff90c555025958fe380e019fdcefa0862e6
+Author: bigQR <qrJosh@outlook.com>
+Date:   Tue Apr 16 21:55:00 2024 -0400
+
+    Basic movement type checks for Queen and Bishop implemented and commented
+
+commit 6bc52aa0537d1329d9e19d9591abd7179a4881e0
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 01:43:13 2024 -0400
+
+    make_move is finished and commented but def needs testing
+
+commit dcb1739be262e520f78ad4dc7fc99093833d9684
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 01:31:12 2024 -0400
+
+    Added helper function to board so I can get the beginning of map and ending
+
+commit ed1469e5f8a4b5243fe78bdca81a1f517bf72967
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 01:21:42 2024 -0400
+
+    Finished helper functions to check if it would be in check if moved
+
+commit 6862d2d42c270b8943265ca57ff7be6943fda094
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Tue Apr 16 00:05:32 2024 -0400
+
+    Game make_move all errors added except for move expose check
+
+commit 44b592a9903c670d5357093dedb8b799db190b2d
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 23:12:46 2024 -0400
+
+    Changes to error handling
+
+commit c9b0b08447cb628b9dc7e6040cf7cca521d71988
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 22:19:07 2024 -0400
+
+    Incorrect Error Handling for board size now fixed
+
+commit 41c203dc583fc889e85c6b8fcb07861c5e6867fb
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 22:16:33 2024 -0400
+
+    Finished Board.cpp and commented, but needs testing
+
+commit 56b31c22430dd2b20b2441ca57444798b5f64df4
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 21:51:35 2024 -0400
+
+    Finished overload operaor() and add_piece, but need testing
+
+commit 897e7aa86d4eb83d4d855d6c9a7bd669fc90c3a7
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 20:01:53 2024 -0400
+
+    Rook finished
+
+commit 813c0d453e3906a8f9eab648d1c59bc2edb4fa41
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 20:01:05 2024 -0400
+
+    Commented Pawn.cpp
+
+commit d021c2c289771212ae60857d7f2c856b7f674b52
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 19:55:05 2024 -0400
+
+    Removed the bool
+
+commit 068d22faf4883451dc0dc239d6ab128916762fba
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 19:54:51 2024 -0400
+
+    Pawn finished, but need comments
+
+commit d3d559fee82c56db3ccffb5c66d2fc535ef30fc1
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Apr 15 13:17:40 2024 -0400
+
+    Finished in my mind pawn.cpp
+
+commit c56726e59a251f21ad44540f71d0db261cc695d8
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Apr 15 12:09:13 2024 -0400
+
+    Importing all the default files from the public CS repo
+
+commit ea9b609d5f348841e63e5c9093669185c79fff8b
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Apr 15 10:34:43 2024 -0400
+
+    README added to test if git is setup properly

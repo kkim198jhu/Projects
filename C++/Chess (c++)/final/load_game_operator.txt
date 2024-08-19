@@ -1,0 +1,34 @@
+std::istream& operator>> (std::istream& is, Game& game) {
+
+		// Clears the board before loading the game
+		for(char r = '8'; r >= '1'; r--) {
+      		for(char c = 'A'; c <= 'H'; c++) {
+				game.board.delete_piece(Position(c, r));
+			}
+		}
+
+		std::string line;
+		int row = 0;
+
+		// Iterates over each line in the input stream (each row of the board)
+		while (is >> line && row < 8) {
+
+			// Iterates over each character (piece) on the board
+			for (int i = 0; i < (int)line.length(); i++) {
+				if (line[i] != '-') {
+					game.board.add_piece(Position('A' + i, '1' + row), line[i]);
+				}
+			}
+			row++;
+		}
+
+		// The last line is used to determine whose turn it is
+		is >> line;
+		if (line[0] == 'w') {
+			game.is_white_turn = true;
+		} else {
+			game.is_white_turn = false;
+		}
+
+		return is;
+	}

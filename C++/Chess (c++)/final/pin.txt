@@ -1,0 +1,243 @@
+
+
+	// Helper Function of in_path_of_check, which shortens the code if the king is in check
+	// Only works on straight lines and returns if it is a opposing queen or rook
+	// Returns 0 if it is protected, 1 if would be in check, and 2 if nothing happens
+	bool Game::in_path_pin_straight(const Position& piece, const Position& end) const{
+		char my_piece;
+		bool piece_is_white;
+		bool piece_is_black;
+
+		//Checks that it's not the same color piece and if so, return false
+		my_piece = board(piece) -> to_ascii();
+		piece_is_black = (my_piece == 'k' || my_piece == 'q' || my_piece == 'r' || my_piece == 'b' || my_piece == 'n' || my_piece == 'p' || my_piece == 'm');
+		piece_is_white = (my_piece == 'K' || my_piece == 'Q' || my_piece == 'R' || my_piece == 'B' || my_piece == 'N' || my_piece == 'P' || my_piece == 'M');
+		//If it is a white piece and black turn, then it blocks any attacks from this direction
+		if(piece_is_white && is_white_turn){
+			return false;
+		//If it is a black piece and black turn, then it blocks any attacks from this direction
+		}else if(piece_is_black && !is_white_turn){
+			return false;
+		//If it is being attacked/checked by a rook or queen
+		}else if(is_white_turn && piece_is_black && !(in_path(piece, end))){
+			return true;
+		}else if(!is_white_turn && piece_is_white && !(in_path(piece, end))){
+			return true;
+		}
+
+		// Returns this if the opposing piece is a knight,bishop, pawn, or king
+		return false;
+	}
+
+	// Helper Function of in_path_of_check, which shortens the code if the king is in check
+	// Only works on straight lines and returns if it is a opposing queen or rook
+	// Returns 0 if it is protected, 1 if would be in check, and 2 if nothing happens
+	bool Game::in_path_pin_diagonal(const Position& piece, const Position& end) const{
+		char my_piece;
+		bool piece_is_white;
+		bool piece_is_black;
+
+		//Checks that it's not the same color piece and if so, return false
+		my_piece = board(piece) -> to_ascii();
+		piece_is_black = (my_piece == 'k' || my_piece == 'q' || my_piece == 'r' || my_piece == 'b' || my_piece == 'n' || my_piece == 'p' || my_piece == 'm');
+		piece_is_white = (my_piece == 'K' || my_piece == 'Q' || my_piece == 'R' || my_piece == 'B' || my_piece == 'N' || my_piece == 'P' || my_piece == 'M');
+		//If it is a white piece and black turn, then it blocks any attacks from this direction
+		if(piece_is_white && is_white_turn){
+			return false;
+		//If it is a black piece and black turn, then it blocks any attacks from this direction
+		}else if(piece_is_black && !is_white_turn){
+			return false;
+		//If it is being attacked/checked by a rook or queen
+		}else if(is_white_turn && piece_is_black && !(in_path(piece, end))){
+			return true;
+		}else if(!is_white_turn && piece_is_white && !(in_path(piece, end))){
+			return true;
+		}
+
+		// Returns this if the opposing piece is a knight,bishop, pawn, or king
+		return false;
+	}
+
+	// Returns true if can't move and return false if can move
+	bool Game::in_path_of_pin(const Position& king, const Position& piece) const{
+		int distance_vertical = king.second - piece.second;
+		int distance_horizontal = king.first - piece.first;
+		Position test_pos;
+		bool test;
+
+		//Test if it is in check vertically
+		if(distance_horizontal == 0){
+			test_pos.first = piece.first;
+			//Test upwards
+			if (distance_vertical < 0){
+				for(int i = 1; i <= ('8' - piece.second); i++){
+					//Changes Position
+					test_pos.second = (char)(piece.second + i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_straight(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+			// Test downwards
+			}else if (distance_vertical > 0){
+				test_pos.first = piece.first;
+				for(int i = 1; i <= (piece.second - '1'); i ++){
+					//Changes Position
+					test_pos.second = (char)(piece.second - i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_straight(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+			}
+		}else if(distance_vertical == 0){
+			test_pos.second = piece.second;
+			//Test rightwards
+			if (distance_horizontal < 0){
+				for(int i = 1; i <= ('H' - piece.first); i ++){
+					//Changes Position
+					test_pos.first = (char)(piece.first + i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_straight(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+			// Test leftwards
+			}else if (distance_horizontal > 0){
+				test_pos.second = piece.second;
+				for(int i = 1; i <= (piece.first - 'A'); i ++){
+					//Changes Position
+					test_pos.first = (char)(piece.first - i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_straight(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+			}
+		//Makes sure that it's in a diagonal
+		}else if (distance_vertical == distance_horizontal){
+
+			//If vertical is positive and horizontal is positive, it must move in a down-left line
+			if(distance_vertical > 0){
+				//Sets length, so does go out of bounds
+				int length = 1;
+				if((piece.second - '1') < (piece.first - 'A')){
+					length = (piece.second - '1');
+				}else{
+					length = (piece.first - 'A');
+				}
+				for(int i = 1; i <= length; i ++){
+					//Changes Position
+					test_pos.first = (char)(piece.first - i);
+					test_pos.second = (char)(piece.second - i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_diagonal(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+
+			//If vertical is negative and horizontal is negtaive, it must move in a up-right line
+			}else if(distance_vertical < 0){
+				//Sets length, so does go out of bounds
+				int length = 1;
+				if(('8' - piece.second) < ('H' - piece.first)){
+					length = ('8' - piece.second);
+				}else{
+					length = ('H' - piece.first);
+				}
+
+				for(int i = 1; i <= length; i ++){
+					//Changes Position
+					test_pos.first = (char)(piece.first + i);
+					test_pos.second = (char)(piece.second + i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_diagonal(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+			}
+		}else if (distance_vertical == (-1 * distance_horizontal)){
+			//If vertical is positive and horizontal is negative, it must move in a down-right line
+			if(distance_vertical > 0){
+				//Sets length, so does go out of bounds
+				int length = 1;
+				if((piece.second - '1') < ('H' - piece.first)){
+					length = (piece.second - '1');
+				}else{
+					length = ('H' - piece.first);
+				}
+
+				for(int i = 1; i <= length; i ++){
+					//Changes Position
+					test_pos.first = (char)(piece.first - i);
+					test_pos.second = (char)(piece.second + i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_diagonal(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+
+			//If vertical is negative and horizontal is negtaive, it must move in a up-left line
+			}else if(distance_vertical < 0){
+				//Sets length, so does go out of bounds
+				int length = 1;
+				if(('8' - piece.second) < (piece.first - 'A')){
+					length = ('8' - piece.second);
+				}else{
+					length = (piece.first - 'A');
+				}
+				for(int i = 1; i <= length; i ++){
+					//Changes Position
+					test_pos.first = (char)(piece.first + i);
+					test_pos.second = (char)(piece.second - i);
+					//Checks if there is something that can put it in check
+					if(board(test_pos) != NULL){
+						test = in_path_pin_diagonal(test_pos, piece);
+						if(test == false) {
+							return false;
+						}else if(test == true){
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		//If it's not any of these conditions i.e. the pieces are not in these lines, then returns false
+		return false;
+	}

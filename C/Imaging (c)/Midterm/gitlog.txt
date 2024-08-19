@@ -1,0 +1,299 @@
+commit 40b54bbe7fb28b81306cd184dd978de19744fbb8
+Author: bigQR <qrJosh@outlook.com>
+Date:   Tue Mar 12 23:58:42 2024 -0400
+
+    Comments and formatting edited to be more specific and easier to read.
+
+commit 83cf451ebdecdf291b6394a0c2c838434d022f99
+Author: bigQR <qrJosh@outlook.com>
+Date:   Tue Mar 12 18:14:04 2024 -0400
+
+    Blur fully functional, passes gradescope public tests, digits of pi increased
+
+commit d3db320f14a321808e7a792e7ba9721fd4fbb7b8
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Mar 11 13:15:34 2024 -0400
+
+    Pointilism fully fixed
+
+commit 43d01efb353fb81c3671016a7d06bacc67dda5a5
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 11 10:51:00 2024 -0400
+
+    Now added floor to grey, which means that there is 0 mismatched pixels
+
+commit acb833bdaeae70522cde534045fde80e8fe0fcd9
+Author: bigQR <qrJosh@outlook.com>
+Date:   Sat Mar 9 20:47:11 2024 -0500
+
+    Blur fixed for first row.
+
+commit ffa8e7fcac3faf0a0e68a948593ee3416b652efa
+Author: bigQR <qrJosh@outlook.com>
+Date:   Thu Mar 7 14:30:03 2024 -0500
+
+    Fixed boundary conditions for blur effect.
+
+commit 85e3b28b77f010e5aa5b2872f0d659fd072df141
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Mar 7 11:44:30 2024 -0500
+
+    Added so it's binary files
+
+commit 5bfce62dfddd6b31f74d63dcad1616901aba82c7
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Thu Mar 7 10:51:22 2024 -0500
+
+    Now added it to have math function
+
+commit 532cbd9dd9d6f0efcbd0e43108c34f74ef151354
+Author: bigQR <qrJosh@outlook.com>
+Date:   Thu Mar 7 01:43:18 2024 -0500
+
+    Blur and pointilism fully functional, comments added.
+
+commit 8ab4f787f176b47d2038f75f976c718b11420538
+Author: bigQR <qrJosh@outlook.com>
+Date:   Thu Mar 7 01:07:30 2024 -0500
+
+    Added Hopkins ID of Joshua Brown
+
+commit a4a9c5e5af8fb196983e76effd206395c41a6237
+Author: bigQR <qrJosh@outlook.com>
+Date:   Thu Mar 7 01:06:14 2024 -0500
+
+    Blur fully functional for both integer and decimal values of sigma. Comments and error testing still needed.
+
+commit 0555f3428df5d67a38704c6292d1cc55a17d65a0
+Author: bigQR <qrJosh@outlook.com>
+Date:   Wed Mar 6 14:59:28 2024 -0500
+
+    Gaussian matrix for blur started, not finished.
+
+commit ca67114db840b15e04c8e4788c5d113559c54bf6
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 17:43:28 2024 -0500
+
+    Added README to git
+
+commit f353ff19f1fa281cebcb8c7461279c9f8315064b
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 17:35:49 2024 -0500
+
+    Finished error handling and tested for memory lekage, but might need to test more
+
+commit fb6e6eb3b7d1dd2034a4d5ae7e231495cf667a54
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 16:19:35 2024 -0500
+
+    Rotate was off by one row, so it is fixed now
+
+commit 1cc765e451087419ab0b8faa03b2836ea949e2bc
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 16:00:23 2024 -0500
+
+    better Makefile as no errors now
+
+commit e91dbea9d54dafa09d65937c534a606462fc3a13
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 13:03:09 2024 -0500
+
+    Makefile now makes img_cmp
+
+commit f63177d259878dd1a426b8c5fc8c45b0564d7921
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 12:42:23 2024 -0500
+
+    updated changes from errors within checkboards and img_cmp
+
+commit 4a6d0740539a346723b1d0bdbd7dfcb25e8f1f7b
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Wed Mar 6 12:36:46 2024 -0500
+
+    Did error handling for the first 6 error cases
+
+commit 9d49d4e356836cb6075eda5ef9356204312dc44f
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Mar 4 17:51:42 2024 -0500
+
+    Pointillism fully functional, looks same as sample. Not fully error tested. Needs comments.
+
+commit de10df14ec998ce31d618dab1d3b2c3b561057b9
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Mar 4 17:05:20 2024 -0500
+
+    Pointillism functional to an extent. Produces wrong but interesting image. No comments, not fully error tested
+
+commit 25fce55a1dfaf0ee5d6f14ce80ebb8353e64f76a
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Mar 4 14:19:44 2024 -0500
+
+    Pointilism partially implemented, still has errors
+
+commit 70e1444bc42f83f72bc9889e1a458b578108eeb7
+Author: bigQR <qrJosh@outlook.com>
+Date:   Mon Mar 4 12:53:20 2024 -0500
+
+    Blend fixed, no longer has wack horizontal lines. Pointilism implemented, not yet tested.
+
+commit 117f7a5e940ecf82cb8ba27aa215ad4a56ba41c6
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 13:12:25 2024 -0500
+
+    Makefile finished with comments
+
+commit 6737944b034f07cbd6ecbe42eba1c63df7f2c112
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 13:10:26 2024 -0500
+
+    Makefile finished, but needs comments
+
+commit bd41149a9c24d67ab33d29ecfcd7066f1c63b020
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 12:43:10 2024 -0500
+
+    Commented, but needs error handling
+
+commit b997dd8c8c954298061a07c4f81c6193949a9362
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 12:41:01 2024 -0500
+
+    Working, but needs comments and error handling
+
+commit 28d87a6ab006f6ddac6fd6c4315b8c2c87d40e4c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 11:58:50 2024 -0500
+
+    Added headers for pointilism and blur but have not started writing functions yet
+
+commit 051d2d0750cced179cc8ea272bd2440273b2c0c8
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 11:58:14 2024 -0500
+
+    Almost finished main without errors or comments
+
+commit 478342c4f58447c3d6d34d75744d735390c5da15
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 00:38:05 2024 -0500
+
+    fixed free_image as it was causing errors
+
+commit b1831d5599ca09abf26baa15340ea81c4e80f45e
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 00:37:21 2024 -0500
+
+    Added comments to saturate but needs error handling to be added at a later date
+
+commit 28604482655d515d52a1c859a3cdb7e4956297d8
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 00:34:59 2024 -0500
+
+    Redited greyscale so it is in range, but now works; needs error handling
+
+commit 2444c02393b8f5207e64d8eb57de148ddcac7d6d
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 00:32:55 2024 -0500
+
+    Finished saturated and tested, but needs comments
+
+commit 8f90adf292135e9e81cecfc7792dbeb5cfce844c
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Mon Mar 4 00:30:46 2024 -0500
+
+    Finished saturated but needs comments
+
+commit e409fe0ffbfa4b4102971bb8fc8853b1ea4a5b24
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 23:56:28 2024 -0500
+
+    Finished rotate with comments
+
+commit dc3797ad56c74e89c138ba102c2e66178597f735
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 20:48:29 2024 -0500
+
+    creating image was placed in wrong spot, but now is in correct spot
+
+commit d41174ca6c3b967faead605e2f5fb22cfc7977aa
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 20:46:44 2024 -0500
+
+    Finished blend and tested to see if it works: It does
+
+commit cc46ef706194e6f24a6904eb8e252b4f2969806a
+Author: bigQR <qrJosh@outlook.com>
+Date:   Sun Mar 3 18:08:28 2024 -0500
+
+    Started blend, not finished. No reportable progress yet.
+
+commit 52f309923c619cec6a3919a684996cf57e45cfca
+Author: bigQR <qrJosh@outlook.com>
+Date:   Sun Mar 3 17:07:56 2024 -0500
+
+    Grayscale working on kitten image. Not fully error or memory leak tested. No comments yet.
+
+commit 69d159d1964837f74169c7046687dab9323301de
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 16:40:13 2024 -0500
+
+    commited and done might need to check for errors
+
+commit 1fd48661ad68b4e7661351250316eff118e161b8
+Author: bigQR <qrJosh@outlook.com>
+Date:   Sun Mar 3 16:36:23 2024 -0500
+
+    Finished ppm_io.c, project.c, tested, no comments. Valgrind checked.
+
+commit 18e74c2fe96ff6251634e73d17b0e36d9adc205e
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 16:27:42 2024 -0500
+
+    Write works and tested now
+
+commit 73f39d366f0695b0ccdef9c2589f119ef60e1c71
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 16:14:27 2024 -0500
+
+    minor testing on project.c
+
+commit 7b3e9eed67177e3a701bafd53f1f667791f749c5
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 16:14:13 2024 -0500
+
+    test file
+
+commit 522dcf6735687312d131305ce08d2e61788550ff
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 16:13:15 2024 -0500
+
+    changes/finish? to write_ppm and make image
+
+commit 5c71122bc8a97bf6e65c3910e73e61cca315e181
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 16:04:41 2024 -0500
+
+    some testing with write
+
+commit 7abaa0fd835843ba700a3a2ed921a9937d9e7152
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 15:48:56 2024 -0500
+
+    Folders are now slightly changed and organized
+
+commit 57a49fabe0494f23114421443d5c60a9c7dbeb71
+Author: Kyle Kim <kkim198@jh.edu>
+Date:   Sun Mar 3 15:44:56 2024 -0500
+
+    project?
+
+commit 9c39a0032484b92736540467a2080e64ee24fad7
+Author: Josh Brown <96305688+bigQR@users.noreply.github.com>
+Date:   Sun Mar 3 15:31:38 2024 -0500
+
+    "Test for github reposistory"
+
+commit 8a9582b03b965c5954302b52348de937e17a93e8
+Author: bigQR <qrJosh@outlook.com>
+Date:   Sun Mar 3 15:24:29 2024 -0500
+
+    first commit

@@ -1,0 +1,10 @@
+Name: Kyle Kim
+JHED: kkim198
+Hopkins ID: F0C77C
+
+Why the Structure of my program?
+    I just followed the instruction of the assignment. I did add some of my own helper functions: mainly 2.
+The first one is only on the template part (part 2), and it is called turnToString, which will take in any
+variable and turn it into a string. This is helpful for printing out nodes. The next helper function that
+I have is the DFtraverse, which helps to store the strings in an acceptable format. I did this because it
+allows for recursion. the remain set up is the same structure as the assignment entails. 
