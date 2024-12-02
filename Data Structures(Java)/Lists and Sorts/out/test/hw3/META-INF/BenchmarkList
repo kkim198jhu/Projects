@@ -1,0 +1,4 @@
+JMH S 18 hw3.JmhRuntimeTest S 52 hw3.jmh_generated.JmhRuntimeTest_moveToFront_jmhTest S 11 moveToFront S 11 AverageTime E A 1 1 1 E I 1 1 E E I 1 2 E E I 1 1 I 1 1 E E E E E U 12 MILLISECONDS E E 
+JMH S 18 hw3.JmhRuntimeTest S 50 hw3.jmh_generated.JmhRuntimeTest_linkedSet_jmhTest S 9 linkedSet S 11 AverageTime E A 1 1 1 E I 1 1 E E I 1 2 E E I 1 1 I 1 1 E E E E E U 12 MILLISECONDS E E 
+JMH S 18 hw3.JmhRuntimeTest S 49 hw3.jmh_generated.JmhRuntimeTest_arraySet_jmhTest S 8 arraySet S 11 AverageTime E A 1 1 1 E I 1 1 E E I 1 2 E E I 1 1 I 1 1 E E E E E U 12 MILLISECONDS E E 
+JMH S 18 hw3.JmhRuntimeTest S 58 hw3.jmh_generated.JmhRuntimeTest_transposeSequence_jmhTest S 17 transposeSequence S 11 AverageTime E A 1 1 1 E I 1 1 E E I 1 2 E E I 1 1 I 1 1 E E E E E U 12 MILLISECONDS E E 

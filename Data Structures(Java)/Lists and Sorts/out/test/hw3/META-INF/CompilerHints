@@ -1,0 +1,10 @@
+dontinline,*.*_all_jmhStub
+dontinline,*.*_avgt_jmhStub
+dontinline,*.*_sample_jmhStub
+dontinline,*.*_ss_jmhStub
+dontinline,*.*_thrpt_jmhStub
+inline,hw3/JmhRuntimeTest.arraySet
+inline,hw3/JmhRuntimeTest.linkedSet
+inline,hw3/JmhRuntimeTest.moveToFront
+inline,hw3/JmhRuntimeTest.setUp
+inline,hw3/JmhRuntimeTest.transposeSequence
