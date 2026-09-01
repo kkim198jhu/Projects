@@ -1,0 +1,36 @@
+{
+  "tutorialText": "Make a sad face to safely pass through the lazer.",
+  "levelWidth": 1800,
+
+  "background": {
+    "r": 0.28,
+    "g": 0.55,
+    "b": 0.65
+  },
+
+  "playerStart": {
+    "x": 100,
+    "y": 90
+  },
+
+  "key": {
+    "x": 1280,
+    "y": 130
+  },
+
+  "door": {
+    "x": 1650,
+    "y": 90
+  },
+
+  "objects": [
+    {
+      "type": "laserEmitter",
+      "x": 760,
+      "y": 90,
+      "w": 50,
+      "h": 80,
+      "length": 560
+    }
+  ]
+}

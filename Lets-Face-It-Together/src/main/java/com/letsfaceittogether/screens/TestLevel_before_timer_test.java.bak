@@ -1,0 +1,246 @@
+package com.letsfaceittogether.screens;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.letsfaceittogether.objects.FanButton;
+import com.letsfaceittogether.objects.GravityButton;
+import com.letsfaceittogether.objects.CeilingGravityButton;
+import com.letsfaceittogether.objects.HeavyButton;
+import com.letsfaceittogether.objects.MovableBox;
+import com.letsfaceittogether.objects.ReversibleButton;
+import com.letsfaceittogether.objects.CeilingButton;
+import com.letsfaceittogether.objects.SolidWall;
+
+public class TestLevel extends BaseLevel {
+    private HeavyButton heavyButton;
+    private FanButton fanButton;
+    private GravityButton gravityButton;
+    private CeilingGravityButton ceilingGravityButton;
+    private ReversibleButton reversibleButton;
+
+    private MovableBox movableBox;
+    private SolidWall[] ceilingBlocks;
+
+    private CeilingButton ceilingHeavyButton;
+    private CeilingButton ceilingFanButton;
+    private CeilingButton ceilingReversibleButton;
+
+    private final float spawnX = 100.0f;
+    private final float spawnY = 90.0f;
+
+    private final float boxSpawnX = 520.0f;
+    private final float boxSpawnY = 90.0f;
+
+    private final float lowerDeathY = -20.0f;
+    private final float upperDeathY = 580.0f;
+
+    public TestLevel() {
+        super();
+
+        setTutorialText("TEST LEVEL: Ground and ceiling buttons are here. Happy or the box can press them.");
+
+        levelWidth = 1500;
+        player.worldWidth = levelWidth;
+
+        resetPlayerToSpawn();
+
+        key.x = 1270;
+        key.y = 150;
+
+        door.x = 1380;
+        door.y = 90;
+
+        heavyButton = new HeavyButton(160, 90, 55, 50);
+        fanButton = new FanButton(240, 90, 55, 50);
+        gravityButton = new GravityButton(320, 90, 55, 50);
+
+        // Upside-down gravity button mounted underneath the upper blocks.
+        // Press this while inverted to flip gravity back to normal.
+        ceilingGravityButton = new CeilingGravityButton(670, 265, 55, 50);
+
+        ceilingHeavyButton = new CeilingButton(
+            250,
+            310,
+            "assets/sprites/objects/Buttons/Button (unpushed).png",
+            "heavy",
+            false
+        );
+
+        ceilingFanButton = new CeilingButton(
+            340,
+            310,
+            "assets/sprites/objects/Buttons/Button (Fan) (Unpushed).png",
+            "fan",
+            false
+        );
+
+        ceilingReversibleButton = new CeilingButton(
+            760,
+            265,
+            "assets/sprites/objects/Buttons/Button (Reversible) (Unpushed).png",
+            "reversible",
+            true
+        );
+        reversibleButton = new ReversibleButton(400, 90, 55, 50);
+
+        movableBox = new MovableBox(boxSpawnX, boxSpawnY, 64, 64);
+
+        ceilingBlocks = new SolidWall[] {
+            new SolidWall(180, 360, 100, 95),
+            new SolidWall(280, 360, 100, 95),
+            new SolidWall(380, 360, 100, 95),
+
+            new SolidWall(560, 315, 100, 95),
+            new SolidWall(660, 315, 100, 95),
+            new SolidWall(760, 315, 100, 95),
+
+            new SolidWall(940, 385, 100, 95),
+            new SolidWall(1040, 385, 100, 95),
+            new SolidWall(1140, 385, 100, 95)
+        };
+    }
+
+    private void resetPlayerToSpawn() {
+        player.ignoreBaseFloor = false;
+        player.setGravityInverted(false);
+
+        if (heavyButton != null) {
+            heavyButton.reset();
+        }
+
+        if (fanButton != null) {
+            fanButton.reset();
+        }
+
+        if (gravityButton != null) {
+            gravityButton.reset();
+        }
+
+        if (ceilingGravityButton != null) {
+            ceilingGravityButton.reset();
+        }
+
+        if (reversibleButton != null) {
+            reversibleButton.reset();
+        }
+
+        if (ceilingHeavyButton != null) {
+            ceilingHeavyButton.reset();
+        }
+
+        if (ceilingFanButton != null) {
+            ceilingFanButton.reset();
+        }
+
+        if (ceilingReversibleButton != null) {
+            ceilingReversibleButton.reset();
+        }
+
+        if (movableBox != null) {
+            movableBox.resetPosition(boxSpawnX, boxSpawnY);
+        }
+
+        player.x = spawnX;
+        player.y = spawnY;
+        player.previousX = player.x;
+        player.previousY = player.y;
+        player.velocityY = 0.0f;
+        player.onGround = true;
+    }
+
+    @Override
+    protected Color getBackgroundColor() {
+        return new Color(0.18f, 0.20f, 0.24f, 1f);
+    }
+
+    @Override
+    protected void updateLevel(float delta) {
+        heavyButton.blockPlayer(player);
+        fanButton.blockPlayer(player);
+        gravityButton.blockPlayer(player);
+        ceilingGravityButton.blockPlayer(player);
+        ceilingHeavyButton.blockPlayer(player);
+        ceilingFanButton.blockPlayer(player);
+        ceilingReversibleButton.blockPlayer(player);
+        reversibleButton.blockPlayer(player);
+
+        movableBox.blockPlayer(player);
+
+        for (SolidWall block : ceilingBlocks) {
+            block.blockPlayer(player);
+        }
+
+        heavyButton.update(player, movableBox);
+        fanButton.update(player, movableBox);
+        gravityButton.update(player, movableBox);
+        ceilingGravityButton.update(player, movableBox);
+        ceilingHeavyButton.update(player, movableBox);
+        ceilingFanButton.update(player, movableBox);
+        ceilingReversibleButton.update(player, movableBox);
+        reversibleButton.update(player, movableBox);
+
+        boolean gravityFlipped = gravityButton.isPressed() && !ceilingGravityButton.isPressed();
+
+        player.setGravityInverted(gravityFlipped);
+        movableBox.setGravityInverted(gravityFlipped);
+        movableBox.update(delta, levelWidth);
+
+        for (SolidWall block : ceilingBlocks) {
+            movableBox.blockAgainstWall(block);
+        }
+
+        if (movableBox.isCrushing(player)) {
+            System.out.println("Player crushed by box!");
+            resetPlayerToSpawn();
+            return;
+        }
+
+        if (player.y < lowerDeathY || player.y > upperDeathY) {
+            resetPlayerToSpawn();
+            return;
+        }
+
+        // If only the box leaves the screen/death zone, delete it until level/player reset.
+        // Do not restart the whole level.
+        if (movableBox.isActive() && (movableBox.y < lowerDeathY || movableBox.y > upperDeathY)) {
+            movableBox.deactivate();
+        }
+    }
+
+    @Override
+    protected void drawLevelObjects(ShapeRenderer shapeRenderer) {
+        heavyButton.draw(shapeRenderer);
+        fanButton.draw(shapeRenderer);
+        gravityButton.draw(shapeRenderer);
+        ceilingGravityButton.draw(shapeRenderer);
+        ceilingHeavyButton.draw(shapeRenderer);
+        ceilingFanButton.draw(shapeRenderer);
+        ceilingReversibleButton.draw(shapeRenderer);
+        reversibleButton.draw(shapeRenderer);
+
+        movableBox.draw(shapeRenderer);
+
+        for (SolidWall block : ceilingBlocks) {
+            block.draw(shapeRenderer);
+        }
+    }
+
+    @Override
+    protected void drawLevelSprites(SpriteBatch batch) {
+        heavyButton.draw(batch);
+        fanButton.draw(batch);
+        gravityButton.draw(batch);
+        ceilingGravityButton.draw(batch);
+        ceilingHeavyButton.draw(batch);
+        ceilingFanButton.draw(batch);
+        ceilingReversibleButton.draw(batch);
+        reversibleButton.draw(batch);
+
+        movableBox.draw(batch);
+
+        for (SolidWall block : ceilingBlocks) {
+            block.draw(batch);
+        }
+    }
+}

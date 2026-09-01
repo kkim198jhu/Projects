@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Let's Face It Together - Recent Object Level Builder</title>
+  <style>
+    body {
+      margin: 0;
+      background: #17171d;
+      color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    #topbar {
+      height: 72px;
+      background: #242431;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      box-sizing: border-box;
+      border-bottom: 2px solid #333344;
+    }
+
+    button, select, input {
+      background: #343448;
+      color: white;
+      border: 1px solid #66667a;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+
+    button:hover {
+      background: #474762;
+      cursor: pointer;
+    }
+
+    button.active {
+      background: #3f7cff;
+      border-color: #9fc0ff;
+    }
+
+    #wrap {
+      display: flex;
+      height: calc(100vh - 72px);
+    }
+
+    #left {
+      width: 240px;
+      background: #20202a;
+      border-right: 2px solid #333344;
+      overflow-y: auto;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    #canvasWrap {
+      flex: 1;
+      overflow: auto;
+      background: #101014;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      background: #251010;
+      image-rendering: pixelated;
+    }
+
+    .section {
+      margin-bottom: 14px;
+      border-bottom: 1px solid #39394a;
+      padding-bottom: 10px;
+    }
+
+    .section h3 {
+      font-size: 14px;
+      margin: 8px 0;
+      color: #cfd7ff;
+    }
+
+    .toolBtn {
+      width: 100%;
+      margin: 3px 0;
+      text-align: left;
+    }
+
+    #jsonBox {
+      position: absolute;
+      right: 12px;
+      top: 84px;
+      width: 420px;
+      height: 520px;
+      background: #111118;
+      color: #dce4ff;
+      border: 2px solid #53536b;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+      display: none;
+      z-index: 5;
+    }
+
+    textarea {
+      width: 100%;
+      height: 420px;
+      background: #09090d;
+      color: #dce4ff;
+      border: 1px solid #55556c;
+      border-radius: 6px;
+      resize: none;
+      box-sizing: border-box;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #aaaac0;
+      line-height: 1.35;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: #c9c9d8;
+      margin-top: 8px;
+    }
+
+    .smallInput {
+      width: 80px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="topbar">
+    <strong>Recent Object Level Builder</strong>
+    <button onclick="setMode('select')" id="mode_select">Select/Move</button>
+    <button onclick="deleteSelected()">Delete</button>
+    <button onclick="duplicateSelected()">Duplicate</button>
+    <button onclick="clearLevel()">Clear</button>
+    <button onclick="toggleJson()">Export / Import JSON</button>
+
+    <label style="display:inline;margin-left:10px;">Grid</label>
+    <input id="gridSize" class="smallInput" type="number" value="10" min="1" />
+
+    <label style="display:inline;margin-left:10px;">Target centis</label>
+    <input id="targetCentis" class="smallInput" type="number" value="600" min="0" />
+
+    <span class="hint">Click to place. Drag selected object. Shift = no snap.</span>
+  </div>
+
+  <div id="wrap">
+    <div id="left">
+      <div class="section">
+        <h3>Core</h3>
+        <button class="toolBtn" onclick="setTool('playerSpawn')">Player Spawn</button>
+        <button class="toolBtn" onclick="setTool('key')">Key</button>
+        <button class="toolBtn" onclick="setTool('door')">Door</button>
+        <button class="toolBtn" onclick="setTool('solidWall')">Wall / Block</button>
+        <button class="toolBtn" onclick="setTool('breakableWall')">Breakable Wall</button>
+        <button class="toolBtn" onclick="setTool('movableBox')">Movable Box</button>
+      </div>
+
+      <div class="section">
+        <h3>Ground Buttons</h3>
+        <button class="toolBtn" onclick="setTool('heavyButton')">Heavy Button</button>
+        <button class="toolBtn" onclick="setTool('fanButton')">Fan Button</button>
+        <button class="toolBtn" onclick="setTool('gravityButton')">Gravity Button</button>
+        <button class="toolBtn" onclick="setTool('reversibleButton')">Reversible Button</button>
+        <button class="toolBtn" onclick="setTool('timerStopButton')">Timer Stop Button</button>
+      </div>
+
+      <div class="section">
+        <h3>Ceiling Buttons</h3>
+        <button class="toolBtn" onclick="setTool('ceilingHeavyButton')">Ceiling Heavy Button</button>
+        <button class="toolBtn" onclick="setTool('ceilingFanButton')">Ceiling Fan Button</button>
+        <button class="toolBtn" onclick="setTool('ceilingGravityButton')">Ceiling Gravity Button</button>
+        <button class="toolBtn" onclick="setTool('ceilingReversibleButton')">Ceiling Reversible Button</button>
+      </div>
+
+      <div class="section">
+        <h3>Timer Puzzle</h3>
+        <button class="toolBtn" onclick="setTool('mainTimer')">Main Timer</button>
+        <button class="toolBtn" onclick="setTool('miniTimer')">Mini Timer</button>
+        <p class="hint">
+          Timer stop buttons correspond to mini timers by order:
+          first button → first mini timer, second → second, etc.
+          Main timer target uses Target centis above.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Selected</h3>
+        <div id="selectedInfo" class="hint">None</div>
+      </div>
+
+      <div class="section">
+        <h3>Notes</h3>
+        <p class="hint">
+          Ceiling buttons are drawn upside down. Timer buttons require Happy in-game.
+          Boxes can press buttons if the Java level loader supports these exported objects.
+        </p>
+      </div>
+    </div>
+
+    <div id="canvasWrap">
+      <canvas id="canvas" width="1600" height="620"></canvas>
+
+      <div id="jsonBox">
+        <strong>Level JSON</strong>
+        <textarea id="jsonText"></textarea>
+        <div style="margin-top:8px;">
+          <button onclick="exportJson()">Refresh Export</button>
+          <button onclick="importJson()">Import From Box</button>
+          <button onclick="copyJson()">Copy</button>
+          <button onclick="toggleJson()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let objects = [];
+let selected = null;
+let currentTool = "select";
+let dragging = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+
+const defaultSizes = {
+  playerSpawn: [50, 85],
+  key: [30, 30],
+  door: [70, 100],
+  solidWall: [100, 95],
+  breakableWall: [100, 95],
+  movableBox: [64, 64],
+
+  heavyButton: [55, 50],
+  fanButton: [55, 50],
+  gravityButton: [55, 50],
+  reversibleButton: [55, 50],
+  timerStopButton: [70, 45],
+
+  ceilingHeavyButton: [55, 50],
+  ceilingFanButton: [55, 50],
+  ceilingGravityButton: [55, 50],
+  ceilingReversibleButton: [55, 50],
+
+  mainTimer: [124, 80],
+  miniTimer: [60, 40]
+};
+
+const colors = {
+  playerSpawn: "#63e6ff",
+  key: "#ffd84a",
+  door: "#c084fc",
+  solidWall: "#8b8b8b",
+  breakableWall: "#a97850",
+  movableBox: "#b9793c",
+
+  heavyButton: "#ff5c5c",
+  fanButton: "#5cc9ff",
+  gravityButton: "#77ff77",
+  reversibleButton: "#ffcc66",
+  timerStopButton: "#ffffff",
+
+  ceilingHeavyButton: "#ff5c5c",
+  ceilingFanButton: "#5cc9ff",
+  ceilingGravityButton: "#77ff77",
+  ceilingReversibleButton: "#ffcc66",
+
+  mainTimer: "#d7d7e8",
+  miniTimer: "#d7d7e8"
+};
+
+function typeLabel(type) {
+  return type
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, c => c.toUpperCase());
+}
+
+function snap(v) {
+  const grid = parseInt(document.getElementById("gridSize").value || "10");
+  return Math.round(v / grid) * grid;
+}
+
+function setMode(mode) {
+  currentTool = mode;
+  updateButtons();
+}
+
+function setTool(tool) {
+  currentTool = tool;
+  updateButtons();
+}
+
+function updateButtons() {
+  document.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+  const modeBtn = document.getElementById("mode_" + currentTool);
+  if (modeBtn) modeBtn.classList.add("active");
+}
+
+function canvasPoint(e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: e.clientX - rect.left,
+    y: canvas.height - (e.clientY - rect.top)
+  };
+}
+
+function makeObject(type, x, y) {
+  const [w, h] = defaultSizes[type] || [60, 60];
+  return {
+    id: "obj_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+    type,
+    x,
+    y,
+    width: w,
+    height: h
+  };
+}
+
+function objectAt(x, y) {
+  for (let i = objects.length - 1; i >= 0; i--) {
+    const o = objects[i];
+    if (x >= o.x && x <= o.x + o.width && y >= o.y && y <= o.y + o.height) {
+      return o;
+    }
+  }
+  return null;
+}
+
+canvas.addEventListener("mousedown", e => {
+  const p = canvasPoint(e);
+  const x = e.shiftKey ? p.x : snap(p.x);
+  const y = e.shiftKey ? p.y : snap(p.y);
+
+  if (currentTool === "select") {
+    selected = objectAt(p.x, p.y);
+    if (selected) {
+      dragging = true;
+      dragOffsetX = p.x - selected.x;
+      dragOffsetY = p.y - selected.y;
+    }
+    updateSelectedInfo();
+    draw();
+    return;
+  }
+
+  const obj = makeObject(currentTool, x, y);
+  objects.push(obj);
+  selected = obj;
+  updateSelectedInfo();
+  draw();
+});
+
+canvas.addEventListener("mousemove", e => {
+  if (!dragging || !selected) return;
+
+  const p = canvasPoint(e);
+  let nx = p.x - dragOffsetX;
+  let ny = p.y - dragOffsetY;
+
+  if (!e.shiftKey) {
+    nx = snap(nx);
+    ny = snap(ny);
+  }
+
+  selected.x = nx;
+  selected.y = ny;
+
+  updateSelectedInfo();
+  draw();
+});
+
+canvas.addEventListener("mouseup", () => {
+  dragging = false;
+});
+
+canvas.addEventListener("mouseleave", () => {
+  dragging = false;
+});
+
+window.addEventListener("keydown", e => {
+  if (e.key === "Delete" || e.key === "Backspace") {
+    deleteSelected();
+  }
+
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "d") {
+    e.preventDefault();
+    duplicateSelected();
+  }
+});
+
+function deleteSelected() {
+  if (!selected) return;
+  objects = objects.filter(o => o !== selected);
+  selected = null;
+  updateSelectedInfo();
+  draw();
+}
+
+function duplicateSelected() {
+  if (!selected) return;
+  const copy = JSON.parse(JSON.stringify(selected));
+  copy.id = "obj_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+  copy.x += 20;
+  copy.y += 20;
+  objects.push(copy);
+  selected = copy;
+  updateSelectedInfo();
+  draw();
+}
+
+function clearLevel() {
+  if (!confirm("Clear this editor level?")) return;
+  objects = [];
+  selected = null;
+  updateSelectedInfo();
+  draw();
+}
+
+function updateSelectedInfo() {
+  const div = document.getElementById("selectedInfo");
+  if (!selected) {
+    div.innerHTML = "None";
+    return;
+  }
+
+  div.innerHTML = `
+    <strong>${typeLabel(selected.type)}</strong><br>
+    x: <input class="smallInput" type="number" value="${selected.x}" onchange="selected.x=parseFloat(this.value); draw(); exportJson(false);"><br>
+    y: <input class="smallInput" type="number" value="${selected.y}" onchange="selected.y=parseFloat(this.value); draw(); exportJson(false);"><br>
+    w: <input class="smallInput" type="number" value="${selected.width}" onchange="selected.width=parseFloat(this.value); draw(); exportJson(false);"><br>
+    h: <input class="smallInput" type="number" value="${selected.height}" onchange="selected.height=parseFloat(this.value); draw(); exportJson(false);">
+  `;
+}
+
+function drawGrid() {
+  const grid = parseInt(document.getElementById("gridSize").value || "10");
+
+  ctx.strokeStyle = "#252530";
+  ctx.lineWidth = 1;
+
+  for (let x = 0; x <= canvas.width; x += grid) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, canvas.height);
+    ctx.stroke();
+  }
+
+  for (let y = 0; y <= canvas.height; y += grid) {
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height - y);
+    ctx.lineTo(canvas.width, canvas.height - y);
+    ctx.stroke();
+  }
+}
+
+function drawObject(o) {
+  const sx = o.x;
+  const sy = canvas.height - o.y - o.height;
+
+  ctx.fillStyle = colors[o.type] || "#ffffff";
+  ctx.globalAlpha = 0.85;
+  ctx.fillRect(sx, sy, o.width, o.height);
+  ctx.globalAlpha = 1;
+
+  if (o.type.startsWith("ceiling")) {
+    ctx.strokeStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.moveTo(sx, sy + o.height);
+    ctx.lineTo(sx + o.width, sy + o.height);
+    ctx.stroke();
+  }
+
+  if (o.type === "mainTimer" || o.type === "miniTimer") {
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(sx + 5, sy + 5, o.width - 10, o.height - 10);
+  }
+
+  ctx.strokeStyle = selected === o ? "#ffff66" : "#111111";
+  ctx.lineWidth = selected === o ? 3 : 1;
+  ctx.strokeRect(sx, sy, o.width, o.height);
+
+  ctx.fillStyle = "#050508";
+  ctx.font = "11px Arial";
+  ctx.fillText(typeLabel(o.type), sx + 4, sy + 14);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawGrid();
+
+  // Ground line
+  ctx.fillStyle = "#3b2a21";
+  ctx.fillRect(0, canvas.height - 90, canvas.width, 20);
+
+  for (const o of objects) {
+    drawObject(o);
+  }
+}
+
+function buildLevelJson() {
+  const byType = {};
+  for (const o of objects) {
+    if (!byType[o.type]) byType[o.type] = [];
+    byType[o.type].push({
+      x: o.x,
+      y: o.y,
+      width: o.width,
+      height: o.height
+    });
+  }
+
+  const spawn = objects.find(o => o.type === "playerSpawn");
+
+  return {
+    schema: "recent-object-builder-v1",
+    levelWidth: canvas.width,
+    floorY: 90,
+    targetTotalCentis: parseInt(document.getElementById("targetCentis").value || "600"),
+    playerSpawn: spawn ? { x: spawn.x, y: spawn.y } : { x: 70, y: 90 },
+    objects: byType,
+    notes: [
+      "timerStopButton requires Happy in-game",
+      "miniTimers correspond to timerStopButtons by order",
+      "mainTimer shows sum of stopped miniTimers",
+      "ceiling buttons are mounted upside down",
+      "movableBox can press buttons if Java loader supports it"
+    ]
+  };
+}
+
+function exportJson(show = true) {
+  const json = buildLevelJson();
+  document.getElementById("jsonText").value = JSON.stringify(json, null, 2);
+  if (show) document.getElementById("jsonBox").style.display = "block";
+}
+
+function importJson() {
+  try {
+    const data = JSON.parse(document.getElementById("jsonText").value);
+    objects = [];
+
+    if (data.targetTotalCentis !== undefined) {
+      document.getElementById("targetCentis").value = data.targetTotalCentis;
+    }
+
+    if (data.playerSpawn) {
+      objects.push({
+        id: "obj_spawn_imported",
+        type: "playerSpawn",
+        x: data.playerSpawn.x,
+        y: data.playerSpawn.y,
+        width: defaultSizes.playerSpawn[0],
+        height: defaultSizes.playerSpawn[1]
+      });
+    }
+
+    if (data.objects) {
+      for (const [type, arr] of Object.entries(data.objects)) {
+        for (const item of arr) {
+          objects.push({
+            id: "obj_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+            type,
+            x: item.x,
+            y: item.y,
+            width: item.width ?? defaultSizes[type]?.[0] ?? 60,
+            height: item.height ?? defaultSizes[type]?.[1] ?? 60
+          });
+        }
+      }
+    }
+
+    selected = null;
+    updateSelectedInfo();
+    draw();
+    alert("Imported JSON.");
+  } catch (err) {
+    alert("Invalid JSON: " + err.message);
+  }
+}
+
+async function copyJson() {
+  exportJson(false);
+  await navigator.clipboard.writeText(document.getElementById("jsonText").value);
+  alert("Copied JSON.");
+}
+
+function toggleJson() {
+  const box = document.getElementById("jsonBox");
+  if (box.style.display === "block") {
+    box.style.display = "none";
+  } else {
+    exportJson(true);
+  }
+}
+
+draw();
+updateButtons();
+</script>
+</body>
+</html>

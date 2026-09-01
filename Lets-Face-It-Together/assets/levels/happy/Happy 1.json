@@ -1,0 +1,511 @@
+{
+  "tutorialText": "Write tutorial text here.",
+  "levelWidth": 2760,
+  "background": {
+    "r": 0.3,
+    "g": 0.3,
+    "b": 0.3
+  },
+  "playerStart": {
+    "x": 100,
+    "y": 380
+  },
+  "key": {
+    "x": 2110,
+    "y": 420
+  },
+  "door": {
+    "x": 2300,
+    "y": 280
+  },
+  "objects": [
+    {
+      "type": "solidWall",
+      "x": 100,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 100,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 100,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "laserEmitter",
+      "x": 2100,
+      "y": 90,
+      "w": 50,
+      "h": 80,
+      "length": 1700,
+      "_minusButton": {
+        "x": 2100,
+        "y": 332,
+        "w": 44,
+        "h": 30
+      },
+      "_plusButton": {
+        "x": 2152,
+        "y": 332,
+        "w": 44,
+        "h": 30
+      }
+    },
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 200,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 280,
+      "w": 100,
+      "h": 95,
+      "id": "wall_7"
+    },
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 375,
+      "w": 100,
+      "h": 95,
+      "id": "wall_8"
+    },
+    {
+      "type": "solidWall",
+      "x": 200,
+      "y": 280,
+      "w": 100,
+      "h": 95,
+      "id": "wall_9"
+    },
+    {
+      "type": "solidWall",
+      "x": 200,
+      "y": 375,
+      "w": 100,
+      "h": 95,
+      "id": "wall_10"
+    },
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 185,
+      "w": 100,
+      "h": 95,
+      "id": "wall_11"
+    },
+    {
+      "type": "solidWall",
+      "x": 200,
+      "y": 185,
+      "w": 100,
+      "h": 95,
+      "id": "wall_12"
+    },
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 90,
+      "w": 100,
+      "h": 95,
+      "id": "wall_13"
+    },
+    {
+      "type": "solidWall",
+      "x": 200,
+      "y": 90,
+      "w": 100,
+      "h": 95,
+      "id": "wall_14"
+    },
+    {
+      "type": "heavyButton",
+      "x": 200,
+      "y": 470,
+      "w": 100,
+      "h": 35,
+      "opens": [
+        "wall_8",
+        "wall_10",
+        "wall_7",
+        "wall_9",
+        "wall_11",
+        "wall_12",
+        "wall_14",
+        "wall_13",
+        "wall_18",
+        "wall_21",
+        "wall_20",
+        "wall_16",
+        "wall_17"
+      ]
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 280,
+      "w": 100,
+      "h": 95,
+      "id": "wall_16"
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 375,
+      "w": 100,
+      "h": 95,
+      "id": "wall_17"
+    },
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 375,
+      "w": 100,
+      "h": 95,
+      "id": "wall_18"
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 185,
+      "w": 100,
+      "h": 95,
+      "id": "wall_20"
+    },
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 280,
+      "w": 100,
+      "h": 95,
+      "id": "wall_21"
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 470,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 470,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 700,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 600,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "heavyButton",
+      "x": 700,
+      "y": 375,
+      "w": 100,
+      "h": 35,
+      "opens": [
+        "wall_29"
+      ]
+    },
+    {
+      "type": "solidWall",
+      "x": 900,
+      "y": 280,
+      "w": 100,
+      "h": 95,
+      "id": "wall_29"
+    },
+    {
+      "type": "solidWall",
+      "x": 1000,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1200,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 375,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 375,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1300,
+      "y": 375,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1300,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1300,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1300,
+      "y": 185,
+      "w": 100,
+      "h": 95,
+      "id": "wall_37"
+    },
+    {
+      "type": "solidWall",
+      "x": 1500,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1500,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 185,
+      "w": 100,
+      "h": 95,
+      "id": "wall_41"
+    },
+    {
+      "type": "solidWall",
+      "x": 1200,
+      "y": -100,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1200,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1200,
+      "y": -100,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1100,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 280,
+      "w": 100,
+      "h": 95,
+      "id": "wall_46"
+    },
+    {
+      "type": "solidWall",
+      "x": 1300,
+      "y": 375,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "heavyButton",
+      "x": 1200,
+      "y": 375,
+      "w": 100,
+      "h": 35,
+      "opens": [
+        "wall_37",
+        "wall_41",
+        "wall_46"
+      ]
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 470,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1300,
+      "y": 470,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1700,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 100,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 0,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 0,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 100,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 0,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1900,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 2300,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 2300,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 2600,
+      "y": -5,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 2400,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    }
+  ],
+  "allowedEmotions": [
+    "NEUTRAL",
+    "HAPPY",
+    "ANGRY",
+    "FEAR",
+    "SURPRISE",
+    "DISGUST"
+  ]
+}

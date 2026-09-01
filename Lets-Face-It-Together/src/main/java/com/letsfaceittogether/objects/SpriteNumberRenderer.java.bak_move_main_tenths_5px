@@ -1,0 +1,83 @@
+package com.letsfaceittogether.objects;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
+public class SpriteNumberRenderer {
+    private Texture[] digits = new Texture[10];
+    private boolean loaded = false;
+
+    public SpriteNumberRenderer() {
+        try {
+            for (int i = 0; i <= 9; i++) {
+                digits[i] = new Texture("assets/sprites/Numbers/" + i + ".png");
+                digits[i].setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
+            loaded = true;
+            System.out.println("Loaded number sprites.");
+        } catch (GdxRuntimeException e) {
+            loaded = false;
+            System.out.println("Could not load number sprites.");
+        }
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void drawDigit(SpriteBatch batch, int digit, float x, float y, float w, float h) {
+        if (!loaded) return;
+        if (digit < 0 || digit > 9) return;
+        batch.draw(digits[digit], x, y, w, h);
+    }
+
+    public void drawMiniTime(SpriteBatch batch, int centis, float x, float y, float scale) {
+        if (!loaded) return;
+
+        if (centis < 0) centis = 0;
+        if (centis > 499) centis = 499;
+
+        int seconds = centis / 100;
+        int tenths = (centis / 10) % 10;
+        int hundredths = centis % 10;
+
+        // Slightly smaller mini digits so they fit the Mini Timer frame more cleanly.
+        float digitScale = scale * 0.47f;
+        float digitW = 5f * digitScale;
+        float digitH = 10f * digitScale;
+
+        // Shift mini digits a little right and up.
+        float digitY = y + 3.10f * scale;
+
+        drawDigit(batch, seconds,    x + 1.75f * scale, digitY, digitW, digitH);
+        drawDigit(batch, tenths,     x + 6.90f * scale, digitY, digitW, digitH);
+        drawDigit(batch, hundredths, x + 10.95f * scale, digitY, digitW, digitH);
+    }
+
+    public void drawMainTime(SpriteBatch batch, int centis, float x, float y, float scale) {
+        if (!loaded) return;
+
+        if (centis < 0) centis = 0;
+        if (centis > 999) centis = 999;
+
+        // Main timer uses only 3 digits total: S.hh
+        int seconds = centis / 100;
+        int tenths = (centis / 10) % 10;
+        int hundredths = centis % 10;
+
+        float digitScale = scale * 0.56f;
+        float digitW = 5f * digitScale;
+        float digitH = 10f * digitScale;
+
+        // Shift main digits a little right and up.
+        float digitY = y + 6.45f * scale;
+
+        drawDigit(batch, seconds,    x + 5.15f  * scale, digitY, digitW, digitH);
+        drawDigit(batch, tenths,     x + 15.25f * scale, digitY, digitW, digitH);
+        drawDigit(batch, hundredths, x + 23.05f * scale, digitY, digitW, digitH);
+    }
+
+
+}

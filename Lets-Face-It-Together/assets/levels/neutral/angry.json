@@ -1,0 +1,38 @@
+{
+  "tutorialText": "Make an angry face to break cracked walls.",
+  "levelWidth": 1800,
+
+  "background": {
+    "r": 0.60,
+    "g": 0.25,
+    "b": 0.25
+  },
+
+  "playerStart": {
+    "x": 100,
+    "y": 90
+  },
+
+  "key": {
+    "x": 1320,
+    "y": 130
+  },
+
+  "door": {
+    "x": 1650,
+    "y": 90
+  },
+
+  "objects": [
+    { "type": "breakableWall", "x": 430, "y": 90, "w": 100, "h": 95 },
+    { "type": "breakableWall", "x": 430, "y": 185, "w": 100, "h": 95 },
+    { "type": "breakableWall", "x": 430, "y": 280, "w": 100, "h": 95 },
+
+    { "type": "breakableWall", "x": 760, "y": 90, "w": 100, "h": 95 },
+    { "type": "breakableWall", "x": 760, "y": 185, "w": 100, "h": 95 },
+
+    { "type": "breakableWall", "x": 1080, "y": 90, "w": 100, "h": 95 },
+    { "type": "breakableWall", "x": 1080, "y": 185, "w": 100, "h": 95 },
+    { "type": "breakableWall", "x": 1080, "y": 280, "w": 100, "h": 95 }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "tutorialText": "Make a happy face to press heavy buttons.",
+  "levelWidth": 1800,
+
+  "background": { "r": 0.62, "g": 0.32, "b": 0.55 },
+
+  "playerStart": { "x": 100, "y": 90 },
+  "key": { "x": 1250, "y": 130 },
+  "door": { "x": 1650, "y": 90 },
+
+  "objects": [
+    { "type": "heavyButton", "x": 420, "y": 90, "w": 100, "h": 35 },
+    { "type": "solidWall", "x": 760, "y": 90, "w": 100, "h": 285 }
+  ]
+}

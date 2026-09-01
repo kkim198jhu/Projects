@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Let's Face It Together - Level Builder</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #222;
+      color: white;
+    }
+
+    #topbar {
+      height: 48px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      box-sizing: border-box;
+    }
+
+    button, select {
+      font-size: 14px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    #main {
+      display: flex;
+      height: calc(100vh - 48px);
+    }
+
+    #palette {
+      width: 190px;
+      background: #2b2b2b;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .tool {
+      width: 100%;
+      margin: 4px 0;
+      padding: 8px;
+      background: #444;
+      color: white;
+      border: 1px solid #777;
+    }
+
+    .tool.selected {
+      background: #777;
+      border: 2px solid yellow;
+    }
+
+    #canvasWrap {
+      flex: 1;
+      overflow: auto;
+      background: #999;
+    }
+
+    canvas {
+      display: block;
+      background: #333;
+    }
+
+    #status {
+      margin-left: 10px;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div id="topbar">
+    <button onclick="newLevel()">New</button>
+    <input id="fileInput" type="file" accept=".json" style="display:none" onchange="openLevelFile(event)">
+    <button onclick="document.getElementById('fileInput').click()">Open JSON</button>
+    <button onclick="saveLevel()">Save JSON</button>
+    <button onclick="deleteSelected()">Delete Selected</button>
+    <span id="status">Tool: solidWall</span>
+  </div>
+
+  <div id="main">
+    <div id="palette">
+      <h3>Objects</h3>
+      <button class="tool selected" onclick="setTool('solidWall', this)">solidWall</button>
+      <button class="tool" onclick="setTool('breakableWall', this)">breakableWall</button>
+      <button class="tool" onclick="setTool('heavyButton', this)">heavyButton</button>
+      <button class="tool" onclick="setTool('laserEmitter', this)">laserEmitter</button>
+      <button class="tool" onclick="setTool('chasingWall', this)">chasingWall</button>
+      <button class="tool" onclick="setTool('surpriseWall', this)">surpriseWall</button>
+      <button class="tool" onclick="setTool('ghost', this)">ghost</button>
+      <button class="tool" onclick="setTool('cage', this)">cage</button>
+
+      <h3>Special</h3>
+      <button class="tool" onclick="setTool('playerStart', this)">playerStart</button>
+      <button class="tool" onclick="setTool('key', this)">key</button>
+      <button class="tool" onclick="setTool('door', this)">door</button>
+
+      <p>
+        Click to place.<br>
+        Drag to move.<br>
+        Press Delete to remove selected object.<br>
+        Use +960 Width to extend the level.
+      </p>
+    </div>
+
+    <div id="canvasWrap">
+      <canvas id="levelCanvas" width="1800" height="540"></canvas>
+    </div>
+  </div>
+
+<script>
+const canvas = document.getElementById("levelCanvas");
+const ctx = canvas.getContext("2d");
+
+const SCREEN_W = 960;
+const SCREEN_H = 540;
+const FLOOR_Y = 70;
+const FLOOR_H = 20;
+const GRID = 10;
+
+let currentTool = "solidWall";
+let selected = null;
+let dragging = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+
+let wiring = false;
+let wireStart = null;
+let wireMouse = null;
+let loadedFileName = "level.json";
+
+let undoStack = [];
+
+let level = defaultLevel();
+
+const defaults = {
+  solidWall: { w: 100, h: 95 },
+  breakableWall: { w: 100, h: 95 },
+  heavyButton: { w: 100, h: 35 },
+  laserEmitter: { w: 50, h: 80, length: 560 },
+  chasingWall: { w: 80, h: 540 },
+  surpriseWall: { w: 100, h: 95 },
+  ghost: { w: 0, h: 0 },
+  cage: { w: 145, h: 125 }
+};
+
+const colors = {
+  solidWall: "#7a0000",
+  breakableWall: "#b03535",
+  heavyButton: "#23c923",
+  laserEmitter: "#555555",
+  chasingWall: "#8844aa",
+  surpriseWall: "#e6d84a",
+  ghost: "#ddddff",
+  cage: "#555555",
+  playerStart: "#245cff",
+  key: "#ffe600",
+  door: "#9a4f28"
+};
+
+function defaultLevel() {
+  return {
+    tutorialText: "Write tutorial text here.",
+    levelWidth: 1800,
+    background: { r: 0.30, g: 0.30, b: 0.30 },
+    playerStart: { x: 100, y: 90 },
+    key: { x: 1300, y: 130 },
+    door: { x: 1650, y: 90 },
+    objects: []
+  };
+}
+
+function setTool(tool, btn) {
+  currentTool = tool;
+  selected = null;
+
+  document.querySelectorAll(".tool").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+
+  updateStatus();
+  draw();
+}
+
+
+function saveUndoState() {
+  undoStack.push(JSON.stringify(level));
+
+  if (undoStack.length > 100) {
+    undoStack.shift();
+  }
+}
+
+function undoLastAction() {
+  if (undoStack.length === 0) {
+    console.log("Nothing to undo.");
+    return;
+  }
+
+  const previous = undoStack.pop();
+  level = JSON.parse(previous);
+  selected = null;
+  dragging = false;
+  wiring = false;
+  wireStart = null;
+  wireMouse = null;
+  draw();
+}
+
+function updateStatus() {
+  document.getElementById("status").textContent =
+    `Tool: ${currentTool} | Width: ${level.levelWidth} | File: ${loadedFileName}`;
+}
+
+function snap(v) {
+  return Math.round(v / GRID) * GRID;
+}
+
+function gameToCanvasY(y, h) {
+  return SCREEN_H - y - h;
+}
+
+function canvasToGameY(cy, h) {
+  return SCREEN_H - cy - h;
+}
+
+function rgbToCss(bg) {
+  const r = Math.floor((bg.r ?? 0.3) * 255);
+  const g = Math.floor((bg.g ?? 0.3) * 255);
+  const b = Math.floor((bg.b ?? 0.3) * 255);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function getDrawSize(obj) {
+  if (obj.type === "playerStart") return { w: 50, h: 85 };
+  if (obj.type === "key") return { w: 84, h: 84 };
+  if (obj.type === "door") return { w: 90, h: 130 };
+  if (obj.type === "ghost") return { w: 95, h: 95 };
+  if (obj.type === "surpriseWall") return { w: obj.w ?? 100, h: obj.h ?? 95 };
+  return { w: obj.w ?? 50, h: obj.h ?? 50 };
+}
+
+function drawObject(obj, index, kind) {
+  const size = getDrawSize(obj);
+  const x = obj.x;
+  const y = gameToCanvasY(obj.y, size.h);
+
+  if (obj.type === "laserEmitter") {
+    const length = obj.length ?? 560;
+    const laserH = 40;
+    const laserY = gameToCanvasY(obj.y + (obj.h ?? 80) / 2 - laserH / 2, laserH);
+    ctx.fillStyle = "#00ddff";
+    ctx.fillRect(obj.x - length, laserY, length, laserH);
+
+    ctx.fillStyle = "white";
+    ctx.font = "14px Arial";
+    ctx.fillText("length: " + length, obj.x - length + 5, laserY - 6);
+  }
+
+  const color = colors[obj.type] || "white";
+
+  if (obj.type === "ghost") {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.ellipse(x + size.w / 2, y + size.h / 2, size.w / 2, size.h / 2, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  } else {
+    drawBox(x, y, size.w, size.h, color, obj.type);
+  }
+
+  if (isSelected(kind, index)) {
+    ctx.strokeStyle = "yellow";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(x, y, size.w, size.h);
+
+    if (obj.type === "laserEmitter" && kind === "object") {
+      drawLaserLengthButtons(obj, index);
+    }
+  }
+}
+
+function drawBox(x, y, w, h, color, label) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, w, h);
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x, y, w, h);
+
+  ctx.fillStyle = "white";
+  ctx.font = "14px Arial";
+  ctx.fillText(label, x + 5, y + 18);
+}
+
+function isSelected(kind, index) {
+  return selected && selected.kind === kind && selected.index === index;
+}
+
+
+function drawLaserLengthButtons(obj, index) {
+  const size = getDrawSize(obj);
+
+  const buttonY = gameToCanvasY(obj.y, size.h) - 38;
+  const minusX = obj.x;
+  const plusX = obj.x + 52;
+
+  ctx.fillStyle = "#111";
+  ctx.fillRect(minusX, buttonY, 44, 30);
+  ctx.fillRect(plusX, buttonY, 44, 30);
+
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(minusX, buttonY, 44, 30);
+  ctx.strokeRect(plusX, buttonY, 44, 30);
+
+  ctx.fillStyle = "white";
+  ctx.font = "16px Arial";
+  ctx.fillText("-100", minusX + 5, buttonY + 21);
+  ctx.fillText("+100", plusX + 5, buttonY + 21);
+
+  // Store button hit areas directly on the object for click detection.
+  obj._minusButton = { x: minusX, y: buttonY, w: 44, h: 30 };
+  obj._plusButton = { x: plusX, y: buttonY, w: 44, h: 30 };
+}
+
+function laserButtonHitTest(mx, my) {
+  for (let i = 0; i < level.objects.length; i++) {
+    const obj = level.objects[i];
+
+    if (obj.type !== "laserEmitter") {
+      continue;
+    }
+
+    if (obj._minusButton &&
+        mx >= obj._minusButton.x && mx <= obj._minusButton.x + obj._minusButton.w &&
+        my >= obj._minusButton.y && my <= obj._minusButton.y + obj._minusButton.h) {
+      return { index: i, action: "minus" };
+    }
+
+    if (obj._plusButton &&
+        mx >= obj._plusButton.x && mx <= obj._plusButton.x + obj._plusButton.w &&
+        my >= obj._plusButton.y && my <= obj._plusButton.y + obj._plusButton.h) {
+      return { index: i, action: "plus" };
+    }
+  }
+
+  return null;
+}
+
+function changeLaserLength(index, amount) {
+  const obj = level.objects[index];
+
+  if (!obj || obj.type !== "laserEmitter") {
+    return;
+  }
+
+  obj.length = Math.max(100, (obj.length ?? 560) + amount);
+
+  // Laser shoots left, so do not let it extend past x=0.
+  obj.length = Math.min(obj.length, obj.x);
+
+  selected = { kind: "object", index };
+  draw();
+}
+
+
+function getObjectCenter(obj) {
+  const size = getDrawSize(obj);
+  return {
+    x: obj.x + size.w / 2,
+    y: gameToCanvasY(obj.y, size.h) + size.h / 2
+  };
+}
+
+function ensureWallId(wallObj, index) {
+  if (!wallObj.id || wallObj.id.trim().length === 0) {
+    wallObj.id = "wall_" + (index + 1);
+  }
+
+  return wallObj.id;
+}
+
+function normalizeOpens(button) {
+  if (!button.opens) {
+    button.opens = [];
+  }
+
+  if (typeof button.opens === "string") {
+    if (button.opens.trim().length === 0) {
+      button.opens = [];
+    } else {
+      button.opens = [button.opens.trim()];
+    }
+  }
+
+  if (!Array.isArray(button.opens)) {
+    button.opens = [];
+  }
+}
+
+function connectButtonAndWall(buttonIndex, wallIndex) {
+  const button = level.objects[buttonIndex];
+  const wall = level.objects[wallIndex];
+
+  if (!button || !wall) return;
+  if (button.type !== "heavyButton" || wall.type !== "solidWall") return;
+
+  const wallId = ensureWallId(wall, wallIndex);
+
+  normalizeOpens(button);
+
+  if (!button.opens.includes(wallId)) {
+    button.opens.push(wallId);
+  }
+
+  selected = { kind: "object", index: buttonIndex };
+  draw();
+}
+
+function selectedObject() {
+  if (!selected || selected.kind !== "object") {
+    return null;
+  }
+
+  return level.objects[selected.index];
+}
+
+function shouldShowWire(buttonIndex, wallIndex) {
+  if (!selected || selected.kind !== "object") {
+    return false;
+  }
+
+  return selected.index === buttonIndex || selected.index === wallIndex;
+}
+
+function drawConnections() {
+  for (let i = 0; i < level.objects.length; i++) {
+    const button = level.objects[i];
+
+    if (button.type !== "heavyButton" || !button.opens) {
+      continue;
+    }
+
+    normalizeOpens(button);
+
+    for (const wallId of button.opens) {
+      const wallIndex = level.objects.findIndex(obj => obj.type === "solidWall" && obj.id === wallId);
+
+      if (wallIndex === -1) {
+        continue;
+      }
+
+      if (!shouldShowWire(i, wallIndex)) {
+        continue;
+      }
+
+      const wall = level.objects[wallIndex];
+
+      const a = getObjectCenter(button);
+      const b = getObjectCenter(wall);
+
+      ctx.strokeStyle = "#ffff00";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#ffff00";
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  if (wiring && wireStart && wireMouse) {
+    const startObj = level.objects[wireStart.index];
+    const a = getObjectCenter(startObj);
+
+    ctx.strokeStyle = "#00ffff";
+    ctx.lineWidth = 4;
+    ctx.setLineDash([8, 6]);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(wireMouse.x, wireMouse.y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function draw() {
+  canvas.width = level.levelWidth;
+  canvas.height = SCREEN_H;
+
+  ctx.fillStyle = rgbToCss(level.background || {});
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  for (let x = 0; x <= level.levelWidth; x += SCREEN_W) {
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, SCREEN_H);
+    ctx.stroke();
+
+    ctx.fillStyle = "white";
+    ctx.font = "22px Arial";
+    ctx.fillText(`x=${x}`, x + 10, 30);
+  }
+
+  for (let x = 0; x <= level.levelWidth; x += 100) {
+    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, SCREEN_H);
+    ctx.stroke();
+  }
+
+  const floorCanvasY = gameToCanvasY(FLOOR_Y, FLOOR_H);
+  ctx.fillStyle = "#444";
+  ctx.fillRect(0, floorCanvasY, level.levelWidth, FLOOR_H);
+
+  drawObject({ type: "playerStart", ...level.playerStart }, 0, "playerStart");
+  drawObject({ type: "key", ...level.key }, 0, "key");
+  drawObject({ type: "door", ...level.door }, 0, "door");
+
+  level.objects.forEach((obj, i) => drawObject(obj, i, "object"));
+
+  drawConnections();
+
+  const minusX = level.levelWidth - 150;
+  const plusX = level.levelWidth - 80;
+
+  ctx.fillStyle = "#222";
+  ctx.fillRect(minusX, 20, 60, 60);
+  ctx.fillRect(plusX, 20, 60, 60);
+
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(minusX, 20, 60, 60);
+  ctx.strokeRect(plusX, 20, 60, 60);
+
+  ctx.fillStyle = "white";
+  ctx.font = "42px Arial";
+  ctx.fillText("-", minusX + 23, 62);
+  ctx.fillText("+", plusX + 18, 64);
+
+  updateStatus();
+}
+
+function getMouse(event) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  };
+}
+
+function hitTest(mx, my) {
+  const special = [
+    { kind: "playerStart", index: 0, obj: { type: "playerStart", ...level.playerStart } },
+    { kind: "key", index: 0, obj: { type: "key", ...level.key } },
+    { kind: "door", index: 0, obj: { type: "door", ...level.door } }
+  ];
+
+  const all = [
+    ...special,
+    ...level.objects.map((obj, i) => ({ kind: "object", index: i, obj }))
+  ];
+
+  for (let i = all.length - 1; i >= 0; i--) {
+    const item = all[i];
+    const size = getDrawSize(item.obj);
+    const x = item.obj.x;
+    const y = gameToCanvasY(item.obj.y, size.h);
+
+    if (mx >= x && mx <= x + size.w && my >= y && my <= y + size.h) {
+      return item;
+    }
+  }
+
+  return null;
+}
+
+function getSelectedObject() {
+  if (!selected) return null;
+  if (selected.kind === "playerStart") return { type: "playerStart", ...level.playerStart };
+  if (selected.kind === "key") return { type: "key", ...level.key };
+  if (selected.kind === "door") return { type: "door", ...level.door };
+  return level.objects[selected.index];
+}
+
+function updateSelectedPosition(x, y) {
+  if (!selected) return;
+
+  if (selected.kind === "playerStart") {
+    level.playerStart.x = x;
+    level.playerStart.y = y;
+  } else if (selected.kind === "key") {
+    level.key.x = x;
+    level.key.y = y;
+  } else if (selected.kind === "door") {
+    level.door.x = x;
+    level.door.y = y;
+  } else {
+    level.objects[selected.index].x = x;
+    level.objects[selected.index].y = y;
+  }
+}
+
+canvas.addEventListener("contextmenu", (event) => {
+  event.preventDefault();
+});
+
+canvas.addEventListener("mousedown", (event) => {
+  const m = getMouse(event);
+
+  if (event.button === 2) {
+    event.preventDefault();
+
+    const hit = hitTest(m.x, m.y);
+
+    if (hit && hit.kind === "object") {
+      const obj = level.objects[hit.index];
+
+      if (obj.type === "heavyButton" || obj.type === "solidWall") {
+        wiring = true;
+        wireStart = { index: hit.index, type: obj.type };
+        wireMouse = m;
+        selected = { kind: "object", index: hit.index };
+        draw();
+      }
+    }
+
+    return;
+  }
+
+  const minusX = level.levelWidth - 150;
+  const plusX = level.levelWidth - 80;
+
+  if (m.x >= minusX && m.x <= minusX + 60 && m.y >= 20 && m.y <= 80) {
+    shrinkLevel();
+    return;
+  }
+
+  if (m.x >= plusX && m.x <= plusX + 60 && m.y >= 20 && m.y <= 80) {
+    expandLevel();
+    return;
+  }
+
+  const laserButton = laserButtonHitTest(m.x, m.y);
+  if (laserButton) {
+    if (laserButton.action === "plus") {
+      changeLaserLength(laserButton.index, 100);
+    } else {
+      changeLaserLength(laserButton.index, -100);
+    }
+    return;
+  }
+
+  const hit = hitTest(m.x, m.y);
+
+  if (hit) {
+    selected = { kind: hit.kind, index: hit.index };
+    saveUndoState();
+    const obj = hit.obj;
+    const size = getDrawSize(obj);
+    dragOffsetX = m.x - obj.x;
+    dragOffsetY = m.y - gameToCanvasY(obj.y, size.h);
+    dragging = true;
+    draw();
+    return;
+  }
+
+  addObject(m.x, m.y);
+});
+
+canvas.addEventListener("mousemove", (event) => {
+  if (wiring) {
+    wireMouse = getMouse(event);
+    draw();
+    return;
+  }
+
+  if (!dragging || !selected) return;
+
+  const m = getMouse(event);
+  const obj = getSelectedObject();
+  const size = getDrawSize(obj);
+
+  let rawX = m.x - dragOffsetX;
+  let rawCanvasY = m.y - dragOffsetY;
+  let rawY = canvasToGameY(rawCanvasY, size.h);
+
+  const snapped = snapObjectPosition(obj.type, rawX, rawY);
+
+  let newX = Math.max(0, Math.min(level.levelWidth - size.w, snapped.x));
+  let newY = Math.max(0, Math.min(SCREEN_H - size.h, snapped.y));
+
+  updateSelectedPosition(newX, newY);
+  draw();
+});
+
+canvas.addEventListener("mouseup", (event) => {
+  if (wiring) {
+    event.preventDefault();
+
+    const m = getMouse(event);
+    const hit = hitTest(m.x, m.y);
+
+    if (hit && hit.kind === "object" && wireStart) {
+      const startObj = level.objects[wireStart.index];
+      const endObj = level.objects[hit.index];
+
+      if (startObj && endObj && wireStart.index !== hit.index) {
+        if (startObj.type === "heavyButton" && endObj.type === "solidWall") {
+          connectButtonAndWall(wireStart.index, hit.index);
+        } else if (startObj.type === "solidWall" && endObj.type === "heavyButton") {
+          connectButtonAndWall(hit.index, wireStart.index);
+        }
+      }
+    }
+
+    wiring = false;
+    wireStart = null;
+    wireMouse = null;
+    draw();
+    return;
+  }
+
+  dragging = false;
+});
+
+
+function isWallGridObject(type) {
+  return type === "solidWall" ||
+         type === "surpriseWall" ||
+         type === "breakableWall" ||
+         type === "door" ||
+         type === "laserEmitter" ||
+         type === "heavyButton";
+}
+
+function snapWallX(x) {
+  return Math.round(x / 100) * 100;
+}
+
+function snapWallY(y) {
+  // Walls sit on floor at y=90, then stack every 95 pixels.
+  return 90 + Math.round((y - 90) / 95) * 95;
+}
+
+function snapObjectPosition(type, x, y) {
+  if (isWallGridObject(type)) {
+    return {
+      x: snapWallX(x),
+      y: snapWallY(y)
+    };
+  }
+
+  return {
+    x: snap(x),
+    y: snap(y)
+  };
+}
+
+function addObject(mx, my) {
+  if (currentTool === "playerStart") {
+    saveUndoState();
+    level.playerStart.x = snap(mx);
+    level.playerStart.y = 90;
+    draw();
+    return;
+  }
+
+  if (currentTool === "key") {
+    saveUndoState();
+    level.key.x = snap(mx);
+    level.key.y = snap(canvasToGameY(my, 84));
+    draw();
+    return;
+  }
+
+  if (currentTool === "door") {
+    saveUndoState();
+    const placed = snapObjectPosition("door", mx, canvasToGameY(my, 130));
+    level.door.x = placed.x;
+    level.door.y = placed.y;
+    draw();
+    return;
+  }
+
+  const d = defaults[currentTool] || { w: 50, h: 50 };
+
+  saveUndoState();
+
+  const placed = snapObjectPosition(currentTool, mx, canvasToGameY(my, d.h));
+
+  const obj = {
+    type: currentTool,
+    x: placed.x,
+    y: placed.y,
+    w: d.w,
+    h: d.h
+  };
+
+  if (d.length) obj.length = d.length;
+
+  level.objects.push(obj);
+  draw();
+}
+
+
+function deleteSelected() {
+  if (!selected) return;
+
+  saveUndoState();
+
+  if (selected.kind === "object") {
+    level.objects.splice(selected.index, 1);
+  }
+
+  selected = null;
+  draw();
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Delete" || event.key === "Backspace") {
+    deleteSelected();
+  }
+});
+
+function expandLevel() {
+  level.levelWidth += 960;
+  draw();
+}
+
+
+function shrinkLevel() {
+  const minWidth = 960;
+  const newWidth = Math.max(minWidth, level.levelWidth - 960);
+
+  if (newWidth === level.levelWidth) {
+    alert("Level cannot be shorter than 960 pixels.");
+    return;
+  }
+
+  const outsideObjects = level.objects.filter(obj => obj.x > newWidth - 20);
+
+  const specialOutside =
+    level.playerStart.x > newWidth - 20 ||
+    level.key.x > newWidth - 20 ||
+    level.door.x > newWidth - 20;
+
+  if ((outsideObjects.length > 0 || specialOutside) &&
+      !confirm("Some objects are past the new level edge. Shrink anyway and clamp them inside?")) {
+    return;
+  }
+
+  level.levelWidth = newWidth;
+
+  clampLevelObjectsInside();
+
+  selected = null;
+  draw();
+}
+
+function clampLevelObjectsInside() {
+  function clampSpecial(obj, w) {
+    obj.x = Math.max(0, Math.min(level.levelWidth - w, obj.x));
+  }
+
+  clampSpecial(level.playerStart, 50);
+  clampSpecial(level.key, 84);
+  clampSpecial(level.door, 90);
+
+  for (const obj of level.objects) {
+    const size = getDrawSize(obj);
+    obj.x = Math.max(0, Math.min(level.levelWidth - size.w, obj.x));
+
+    if (obj.type === "laserEmitter") {
+      const maxLength = Math.max(100, obj.x);
+      obj.length = Math.min(obj.length ?? 560, maxLength);
+    }
+  }
+}
+
+function newLevel() {
+  if (!confirm("Start a new blank level? Unsaved changes will be lost.")) return;
+  level = defaultLevel();
+  loadedFileName = "level.json";
+  selected = null;
+  draw();
+}
+
+function openLevelFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  loadedFileName = file.name;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    level = JSON.parse(e.target.result);
+    selected = null;
+    draw();
+  };
+  reader.readAsText(file);
+}
+
+function saveLevel() {
+  const text = JSON.stringify(level, null, 2);
+  const blob = new Blob([text], { type: "application/json" });
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+  a.download = loadedFileName || "level.json";
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+}
+
+window.addEventListener("keydown", function(event) {
+  const key = event.key.toLowerCase();
+
+  if ((event.metaKey || event.ctrlKey) && key === "z") {
+    event.preventDefault();
+    event.stopPropagation();
+    undoLastAction();
+    return false;
+  }
+
+  if (event.key === "Delete" || event.key === "Backspace") {
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+    const typing = activeTag === "input" || activeTag === "textarea";
+
+    if (!typing) {
+      event.preventDefault();
+      event.stopPropagation();
+      deleteSelected();
+      return false;
+    }
+  }
+}, true);
+
+
+draw();
+</script>
+</body>
+</html>

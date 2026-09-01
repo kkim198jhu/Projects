@@ -1,0 +1,177 @@
+{
+  "tutorialText": "Surprise Move Allows You to See Through Certain Blocks",
+  "levelWidth": 1800,
+  "background": {
+    "r": 0.3,
+    "g": 0.3,
+    "b": 0.3
+  },
+  "playerStart": {
+    "x": 100,
+    "y": 90
+  },
+  "key": {
+    "x": 320,
+    "y": 400
+  },
+  "door": {
+    "x": 1400,
+    "y": 375
+  },
+  "objects": [
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 300,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 400,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 400,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 500,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 600,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 600,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 700,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 800,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "surpriseWall",
+      "x": 700,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 300,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 500,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 600,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 800,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 800,
+      "y": 185,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 700,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1000,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1200,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 1400,
+      "y": 280,
+      "w": 100,
+      "h": 95
+    },
+    {
+      "type": "solidWall",
+      "x": 900,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "tutorialText": "Make a fearful face to run faster and escape danger.",
+  "levelWidth": 1800,
+
+  "background": {
+    "r": 0.45,
+    "g": 0.30,
+    "b": 0.62
+  },
+
+  "playerStart": {
+    "x": 100,
+    "y": 90
+  },
+
+  "key": {
+    "x": 1350,
+    "y": 130
+  },
+
+  "door": {
+    "x": 1650,
+    "y": 90
+  },
+
+  "objects": [
+    { "type": "chasingWall", "x": -90, "y": 0, "w": 80, "h": 540 },
+
+    { "type": "solidWall", "x": 480, "y": 90, "w": 100, "h": 95 },
+    { "type": "solidWall", "x": 820, "y": 90, "w": 100, "h": 95 },
+    { "type": "solidWall", "x": 1130, "y": 90, "w": 100, "h": 95 }
+  ]
+}

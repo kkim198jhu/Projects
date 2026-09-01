@@ -1,0 +1,30 @@
+{
+  "tutorialText": "Feature test level. Use this to test new objects before adding them to real worlds.",
+  "levelWidth": 1800,
+  "background": {
+    "r": 0.25,
+    "g": 0.25,
+    "b": 0.28
+  },
+  "playerStart": {
+    "x": 100,
+    "y": 90
+  },
+  "key": {
+    "x": 1450,
+    "y": 150
+  },
+  "door": {
+    "x": 1650,
+    "y": 90
+  },
+  "objects": [
+    {
+      "type": "solidWall",
+      "x": 400,
+      "y": 90,
+      "w": 100,
+      "h": 95
+    }
+  ]
+}

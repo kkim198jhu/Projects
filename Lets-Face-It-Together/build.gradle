@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+application {
+    mainClass = 'com.letsfaceittogether.LetsFaceItTogether'
+}
+
+run {
+    jvmArgs += ['-XstartOnFirstThread']
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:1.14.0"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.14.0"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.14.0:natives-desktop"
+
+    implementation "org.zeromq:jeromq:0.6.0"
+}
